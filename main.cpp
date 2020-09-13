@@ -3,26 +3,26 @@
 #include "TXLib.h"
 
 int main()
-    {
+{
     txCreateWindow (1532 , 840);
 
-    HDC  object0 = txLoadImage ("dom1.bmp");
-    HDC  object1 = txLoadImage ("dom2.bmp");
-    HDC  object2 = txLoadImage ("dom3.bmp");
-    HDC  object3 = txLoadImage ("dom4.bmp");
-    HDC  object4 = txLoadImage ("dom5.bmp");
-    HDC  object5 = txLoadImage ("dom6.bmp");
-    HDC  object6 = txLoadImage ("mnogoetajka1.bmp");
-    HDC  object7 = txLoadImage ("park1.bmp");
-    HDC  object8 = txLoadImage ("park2.bmp");
-    HDC  object9 = txLoadImage ("park3.bmp");
-
     txTextCursor (false);
+    bool drawHouse = true;
 
+        HDC  object0 = txLoadImage ("Дома/dom1.bmp");
+        HDC  object1 = txLoadImage ("Дома/dom2.bmp");
+        HDC  object2 = txLoadImage ("Дома/dom3.bmp");
+        HDC  object3 = txLoadImage ("Дома/dom4.bmp");
+        HDC  object4 = txLoadImage ("Дома/dom5.bmp");
+        HDC  object5 = txLoadImage ("Дома/dom6.bmp");
+        HDC  object6 = txLoadImage ("Дома/mnogoetajka1.bmp");
+        HDC  object7 = txLoadImage ("Парки/park1.bmp");
+        HDC  object8 = txLoadImage ("Парки/park2.bmp");
+        HDC  object9 = txLoadImage ("Парки/park3.bmp");
 
     while(true)
     {
-
+        txBegin();
         txSetFillColour(TX_GRAY);
         txSetColour(TX_BLACK);
         txRectangle(0,0,1532,150);
@@ -57,6 +57,7 @@ int main()
         txSetColour(TX_CYAN);
         txTextOut(1020, 60,"Многоэтажки");
 
+        /*
 
   while (txMouseButtons() != 3)
               {
@@ -68,13 +69,30 @@ int main()
 
               if (txMouseButtons() & 2)
               txSleep (0);
+        */
 
+        if (1)
+        {
+            drawHouse = true;
+        }
 
+        else if(2)
+        {
+            //drawPark = true;
+        }
 
-
-
-
-
+        if (drawHouse)
+        {
+            Win32::TransparentBlt (txDC(),1300,250,200,100,object0,0,0,1536,1152, TX_WHITE);
+            Win32::TransparentBlt (txDC(),1300,400,200,100,object1,0,0,564,300, TX_WHITE);
+            Win32::TransparentBlt (txDC(),1300,550,200,100,object2,0,0,571,393, TX_WHITE);
+        }
+        else
+        {
+            Win32::TransparentBlt (txDC(),1300,250,200,100,object7,0,0,900,197, TX_WHITE);
+            Win32::TransparentBlt (txDC(),1300,400,200,100,object8,0,0,512,355, TX_WHITE);
+            Win32::TransparentBlt (txDC(),1300,550,200,100,object9,0,0,650,400, TX_WHITE);
+        }
 
 
 
@@ -91,7 +109,10 @@ int main()
 
 
         txSleep(20);
+        txEnd();
     }
+
+
 
     return 0;
     }
