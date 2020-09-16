@@ -7,7 +7,15 @@ int main()
     txCreateWindow (1532 , 840);
 
     txTextCursor (false);
-    bool drawHouse = true;
+    bool drawHouse = false;
+    bool drawPark = false;
+    bool drawObject = false;
+    bool drawObject1 = false;
+    bool drawObject2 = false;
+    bool drawObject3 = false;
+    bool drawObject4 = false;
+    bool drawObject5 = false;
+    bool drawObject6 = false;
 
         HDC  object0 = txLoadImage ("Дома/dom1.bmp");
         HDC  object1 = txLoadImage ("Дома/dom2.bmp");
@@ -57,42 +65,97 @@ int main()
         txSetColour(TX_CYAN);
         txTextOut(1020, 60,"Многоэтажки");
 
-        /*
 
-  while (txMouseButtons() != 3)
-              {
-              if (txMouseButtons() & 1)
-              (
-               (txMouseButtons()
 
-               )
 
-              if (txMouseButtons() & 2)
-              txSleep (0);
-        */
 
-        if (1)
+        if (txMouseButtons() == 1 &&
+            txMouseX() >= 10 &&  txMouseX() <= 200 &&
+            txMouseY() >= 10 && txMouseY() <= 140 )
         {
             drawHouse = true;
+            drawPark = false;
         }
 
-        else if(2)
+        else if(txMouseButtons() == 1 &&
+            txMouseX() >= 210 &&  txMouseX() <= 400 &&
+            txMouseY() >= 10 && txMouseY() <= 140)
         {
-            //drawPark = true;
+            drawPark = true;
+            drawHouse = false;
         }
+
 
         if (drawHouse)
         {
-            Win32::TransparentBlt (txDC(),1300,250,200,100,object0,0,0,1536,1152, TX_WHITE);
-            Win32::TransparentBlt (txDC(),1300,400,200,100,object1,0,0,564,300, TX_WHITE);
-            Win32::TransparentBlt (txDC(),1300,550,200,100,object2,0,0,571,393, TX_WHITE);
+            Win32::TransparentBlt (txDC(),1325,250,200,100,object0,0,0,615,369, TX_WHITE);
+            Win32::TransparentBlt (txDC(),1325,400,200,100,object1,0,0,564,300, TX_WHITE);
+            Win32::TransparentBlt (txDC(),1325,550,200,100,object2,0,0,571,393, TX_WHITE);
         }
-        else
+        else if(drawPark)
         {
-            Win32::TransparentBlt (txDC(),1300,250,200,100,object7,0,0,900,197, TX_WHITE);
-            Win32::TransparentBlt (txDC(),1300,400,200,100,object8,0,0,512,355, TX_WHITE);
-            Win32::TransparentBlt (txDC(),1300,550,200,100,object9,0,0,650,400, TX_WHITE);
+            Win32::TransparentBlt (txDC(),1325,250,200,100,object7,0,0,900,195, TX_WHITE);
+            Win32::TransparentBlt (txDC(),1325,400,200,100,object8,0,0,512,355, TX_WHITE);
+            Win32::TransparentBlt (txDC(),1325,550,200,100,object9,0,0,650,400, TX_WHITE);
         }
+
+        if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 250 && txMouseY() <= 350 && drawHouse )
+        {
+            drawObject1 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 400 && txMouseY() <= 500 && drawHouse )
+        {
+            drawObject2 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 550 && txMouseY() <= 650 && drawHouse)
+        {
+            drawObject3 = true;
+        }
+
+        if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 250 && txMouseY() <= 350 && drawPark )
+        {
+            drawObject4 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 400 && txMouseY() <= 500 && drawPark )
+        {
+            drawObject5 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 550 && txMouseY() <= 650 && drawPark )
+        {
+            drawObject6 = true;
+        }
+
+
+
+        if (drawObject1)
+            Win32::TransparentBlt (txDC(),325,250,200,100,object0,0,0,615,369, TX_WHITE);
+        if (drawObject2)
+            Win32::TransparentBlt (txDC(),325,400,200,100,object1,0,0,564,300, TX_WHITE);
+        if (drawObject3)
+            Win32::TransparentBlt (txDC(),325,550,200,100,object2,0,0,571,393, TX_WHITE);
+
+        if (drawObject4)
+            Win32::TransparentBlt (txDC(),325,250,200,100,object7,0,0,900,195, TX_WHITE);
+        if (drawObject5)
+            Win32::TransparentBlt (txDC(),325,400,200,100,object8,0,0,512,355, TX_WHITE);
+        if (drawObject6)
+            Win32::TransparentBlt (txDC(),325,550,200,100,object9,0,0,650,400, TX_WHITE);
 
 
 
