@@ -35,18 +35,26 @@ int main()
     txCreateWindow (1532 , 840);
 
     txTextCursor (false);
-    bool drawHouse = true;
+    bool drawHouse = false;
+    bool drawPark = false;
+    bool drawObject = false;
+    bool drawObject1 = false;
+    bool drawObject2 = false;
+    bool drawObject3 = false;
+    bool drawObject4 = false;
+    bool drawObject5 = false;
+    bool drawObject6 = false;
 
-        HDC  object0 = txLoadImage ("Äîìà/dom1.bmp");
-        HDC  object1 = txLoadImage ("Äîìà/dom2.bmp");
-        HDC  object2 = txLoadImage ("Äîìà/dom3.bmp");
-        HDC  object3 = txLoadImage ("Äîìà/dom4.bmp");
-        HDC  object4 = txLoadImage ("Äîìà/dom5.bmp");
-        HDC  object5 = txLoadImage ("Äîìà/dom6.bmp");
-        HDC  object6 = txLoadImage ("Äîìà/mnogoetajka1.bmp");
-        HDC  object7 = txLoadImage ("Ïàðêè/park1.bmp");
-        HDC  object8 = txLoadImage ("Ïàðêè/park2.bmp");
-        HDC  object9 = txLoadImage ("Ïàðêè/park3.bmp");
+        HDC  object0 = txLoadImage ("Ã„Ã®Ã¬Ã /dom1.bmp");
+        HDC  object1 = txLoadImage ("Ã„Ã®Ã¬Ã /dom2.bmp");
+        HDC  object2 = txLoadImage ("Ã„Ã®Ã¬Ã /dom3.bmp");
+        HDC  object3 = txLoadImage ("Ã„Ã®Ã¬Ã /dom4.bmp");
+        HDC  object4 = txLoadImage ("Ã„Ã®Ã¬Ã /dom5.bmp");
+        HDC  object5 = txLoadImage ("Ã„Ã®Ã¬Ã /dom6.bmp");
+        HDC  object6 = txLoadImage ("Ã„Ã®Ã¬Ã /mnogoetajka1.bmp");
+        HDC  object7 = txLoadImage ("ÃÃ Ã°ÃªÃ¨/park1.bmp");
+        HDC  object8 = txLoadImage ("ÃÃ Ã°ÃªÃ¨/park2.bmp");
+        HDC  object9 = txLoadImage ("ÃÃ Ã°ÃªÃ¨/park3.bmp");
 
         Picture pic[100];
         pic[0] = {1300, 250, 615, 369, object0};
@@ -71,43 +79,94 @@ int main()
         txSetFillColour(TX_WHITE);
         txRectangle(0,150,1300,840);
 
-        drawButton(10,10, "Äîìà",TX_CYAN,TX_YELLOW);
-        drawButton(210,10, "Ïàðêè",TX_GREEN,TX_ORANGE);
-        drawButton(410,10, "Çäàíèè",TX_BLUE,TX_MAGENTA);
-        drawButton(610,10, "Ïðèðîäà",TX_MAGENTA,TX_BLUE);
-        drawButton(810,10, "Äîðîãè",TX_ORANGE,TX_GREEN);
-        drawButton(1010,10, "Ìíîãîýòàæêè",TX_YELLOW,TX_CYAN);
+        drawButton(10,10, "Ã„Ã®Ã¬Ã ",TX_CYAN,TX_YELLOW);
+        drawButton(210,10, "ÃÃ Ã°ÃªÃ¨",TX_GREEN,TX_ORANGE);
+        drawButton(410,10, "Ã‡Ã¤Ã Ã­Ã¨Ã¨",TX_BLUE,TX_MAGENTA);
+        drawButton(610,10, "ÃÃ°Ã¨Ã°Ã®Ã¤Ã ",TX_MAGENTA,TX_BLUE);
+        drawButton(810,10, "Ã„Ã®Ã°Ã®Ã£Ã¨",TX_ORANGE,TX_GREEN);
+        drawButton(1010,10, "ÃŒÃ­Ã®Ã£Ã®Ã½Ã²Ã Ã¦ÃªÃ¨",TX_YELLOW,TX_CYAN);
 
-        if (1)
+        if (txMouseButtons() == 1 &&
+            txMouseX() >= 10 &&  txMouseX() <= 200 &&
+            txMouseY() >= 10 && txMouseY() <= 140 )
         {
             drawHouse = true;
+            drawPark = false;
         }
 
-        else if(2)
+        else if(txMouseButtons() == 1 &&
+            txMouseX() >= 210 &&  txMouseX() <= 400 &&
+            txMouseY() >= 10 && txMouseY() <= 140)
         {
-            //drawPark = true;
+            drawPark = true;
+            drawHouse = false;
         }
+
 
         if (drawHouse)
             for (int i = 0; i <= 2; i++)
                 Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
-
-        else
+        else if(drawPark)
             for (int i = 3; i <= 5; i++)
                 Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
 
+        if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 250 && txMouseY() <= 350 && drawHouse )
+        {
+            drawObject1 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 400 && txMouseY() <= 500 && drawHouse )
+        {
+            drawObject2 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 550 && txMouseY() <= 650 && drawHouse)
+        {
+            drawObject3 = true;
+        }      
+
+        if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 250 && txMouseY() <= 350 && drawPark )
+        {
+            drawObject4 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 400 && txMouseY() <= 500 && drawPark )
+        {
+            drawObject5 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 550 && txMouseY() <= 650 && drawPark )
+        {
+            drawObject6 = true;
+        }
 
 
 
+        if (drawObject1)
+            Win32::TransparentBlt (txDC(),325,250,200,100,object0,0,0,615,369, TX_WHITE);
+        if (drawObject2)
+            Win32::TransparentBlt (txDC(),325,400,200,100,object1,0,0,564,300, TX_WHITE);
+        if (drawObject3)
+            Win32::TransparentBlt (txDC(),325,550,200,100,object2,0,0,571,393, TX_WHITE);
 
-
-
-
-
-
-
-
-
+        if (drawObject4)
+            Win32::TransparentBlt (txDC(),325,250,200,100,object7,0,0,900,195, TX_WHITE);
+        if (drawObject5)
+            Win32::TransparentBlt (txDC(),325,400,200,100,object8,0,0,512,355, TX_WHITE);
+        if (drawObject6)
+            Win32::TransparentBlt (txDC(),325,550,200,100,object9,0,0,650,400, TX_WHITE);
 
 
 
@@ -115,8 +174,5 @@ int main()
         txEnd();
     }
 
-
-
     return 0;
-    }
-
+}
