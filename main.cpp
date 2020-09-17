@@ -45,16 +45,16 @@ int main()
     bool drawObject5 = false;
     bool drawObject6 = false;
 
-        HDC  object0 = txLoadImage ("Ã„Ã®Ã¬Ã /dom1.bmp");
-        HDC  object1 = txLoadImage ("Ã„Ã®Ã¬Ã /dom2.bmp");
-        HDC  object2 = txLoadImage ("Ã„Ã®Ã¬Ã /dom3.bmp");
-        HDC  object3 = txLoadImage ("Ã„Ã®Ã¬Ã /dom4.bmp");
-        HDC  object4 = txLoadImage ("Ã„Ã®Ã¬Ã /dom5.bmp");
-        HDC  object5 = txLoadImage ("Ã„Ã®Ã¬Ã /dom6.bmp");
-        HDC  object6 = txLoadImage ("Ã„Ã®Ã¬Ã /mnogoetajka1.bmp");
-        HDC  object7 = txLoadImage ("ÃÃ Ã°ÃªÃ¨/park1.bmp");
-        HDC  object8 = txLoadImage ("ÃÃ Ã°ÃªÃ¨/park2.bmp");
-        HDC  object9 = txLoadImage ("ÃÃ Ã°ÃªÃ¨/park3.bmp");
+        HDC  object0 = txLoadImage ("Äîìà/dom1.bmp");
+        HDC  object1 = txLoadImage ("Äîìà/dom2.bmp");
+        HDC  object2 = txLoadImage ("Äîìà/dom3.bmp");
+        HDC  object3 = txLoadImage ("Äîìà/dom4.bmp");
+        HDC  object4 = txLoadImage ("Äîìà/dom5.bmp");
+        HDC  object5 = txLoadImage ("Äîìà/dom6.bmp");
+        HDC  object6 = txLoadImage ("Äîìà/mnogoetajka1.bmp");
+        HDC  object7 = txLoadImage ("Ïàðêè/park1.bmp");
+        HDC  object8 = txLoadImage ("Ïàðêè/park2.bmp");
+        HDC  object9 = txLoadImage ("Ïàðêè/park3.bmp");
 
         Picture pic[100];
         pic[0] = {1300, 250, 615, 369, object0};
@@ -79,12 +79,12 @@ int main()
         txSetFillColour(TX_WHITE);
         txRectangle(0,150,1300,840);
 
-        drawButton(10,10, "Ã„Ã®Ã¬Ã ",TX_CYAN,TX_YELLOW);
-        drawButton(210,10, "ÃÃ Ã°ÃªÃ¨",TX_GREEN,TX_ORANGE);
-        drawButton(410,10, "Ã‡Ã¤Ã Ã­Ã¨Ã¨",TX_BLUE,TX_MAGENTA);
-        drawButton(610,10, "ÃÃ°Ã¨Ã°Ã®Ã¤Ã ",TX_MAGENTA,TX_BLUE);
-        drawButton(810,10, "Ã„Ã®Ã°Ã®Ã£Ã¨",TX_ORANGE,TX_GREEN);
-        drawButton(1010,10, "ÃŒÃ­Ã®Ã£Ã®Ã½Ã²Ã Ã¦ÃªÃ¨",TX_YELLOW,TX_CYAN);
+        drawButton(10,10, "Äîìà",TX_CYAN,TX_YELLOW);
+        drawButton(210,10, "Ïàðêè",TX_GREEN,TX_ORANGE);
+        drawButton(410,10, "Çäàíèè",TX_BLUE,TX_MAGENTA);
+        drawButton(610,10, "Ïðèðîäà",TX_MAGENTA,TX_BLUE);
+        drawButton(810,10, "Äîðîãè",TX_ORANGE,TX_GREEN);
+        drawButton(1010,10, "Ìíîãîýòàæêè",TX_YELLOW,TX_CYAN);
 
         if (txMouseButtons() == 1 &&
             txMouseX() >= 10 &&  txMouseX() <= 200 &&
@@ -129,7 +129,7 @@ int main()
             txMouseY() >= 550 && txMouseY() <= 650 && drawHouse)
         {
             drawObject3 = true;
-        }      
+        }
 
         if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
