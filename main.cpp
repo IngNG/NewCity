@@ -1,6 +1,34 @@
-
-
 #include "TXLib.h"
+
+
+
+struct Picture
+{
+    int x;
+    int y;
+    int width;
+    int height;
+    HDC object;
+};
+
+struct Button
+{
+    int x;
+    int y;
+    const char text[];
+    COLORREF colorButton;
+    COLORREF colorText;
+};
+
+void drawButton(int x,int y,const char text[],COLORREF color,COLORREF color1)
+{
+    txSetColour(TX_BLACK);
+    txSetFillColour(color);
+    txRectangle(x,y,x + 190,y + 130);
+    txSetColour(color1);
+    txSelectFont("ARIAL", 40);
+    txDrawText(x,y,x + 190,y + 130,text);
+}
 
 int main()
 {
@@ -20,6 +48,19 @@ int main()
         HDC  object8 = txLoadImage ("Парки/park2.bmp");
         HDC  object9 = txLoadImage ("Парки/park3.bmp");
 
+        Picture pic[100];
+        pic[0] = {1300, 250, 615, 369, object0};
+        pic[1] = {1300, 400, 564, 300, object1};
+        pic[2] = {1300, 550, 571, 393, object2};
+        pic[3] = {1300, 250, 350, 324, object3};
+        pic[4] = {1300, 400, 407, 264, object4};
+        pic[5] = {1300, 550, 495, 293, object5};
+        pic[6] = {1300, 550, 520, 342, object6};
+        pic[7] = {1300, 250, 900, 197, object7};
+        pic[8] = {1300, 400, 512, 355, object8};
+        pic[9] = {1300, 550, 650, 400, object9};
+
+
     while(true)
     {
         txBegin();
@@ -30,46 +71,12 @@ int main()
         txSetFillColour(TX_WHITE);
         txRectangle(0,150,1300,840);
 
-        txSetFillColour(TX_CYAN);
-        txRectangle( 10,10,200,140);
-        txSetFillColour(TX_BLUE);
-        txRectangle(210,10,400,140);
-        txSetFillColour(TX_GREEN);
-        txRectangle(410,10,600,140);
-        txSetFillColour(TX_RED);
-        txRectangle(610,10,800,140);
-        txSetFillColour(TX_MAGENTA);
-        txRectangle(810,10,1000,140);
-        txSetFillColour(TX_ORANGE);
-        txRectangle(1010,10,1200,140);
-
-        txSetColour(TX_ORANGE);
-        txSelectFont("ARIAL", 40);
-        txTextOut(70, 60,"Дома");
-        txSetColour(TX_MAGENTA);
-        txTextOut(250, 60,"Парки");
-        txSetColour(TX_RED);
-        txTextOut(450, 60,"Здании");
-        txSetColour(TX_GREEN);
-        txTextOut(650, 60,"Природа");
-        txSetColour(TX_BLUE);
-        txTextOut(850, 60,"Дороги");
-        txSetColour(TX_CYAN);
-        txTextOut(1020, 60,"Многоэтажки");
-
-        /*
-
-  while (txMouseButtons() != 3)
-              {
-              if (txMouseButtons() & 1)
-              (
-               (txMouseButtons()
-
-               )
-
-              if (txMouseButtons() & 2)
-              txSleep (0);
-        */
+        drawButton(10,10, "Дома",TX_CYAN,TX_YELLOW);
+        drawButton(210,10, "Парки",TX_GREEN,TX_ORANGE);
+        drawButton(410,10, "Здании",TX_BLUE,TX_MAGENTA);
+        drawButton(610,10, "Природа",TX_MAGENTA,TX_BLUE);
+        drawButton(810,10, "Дороги",TX_ORANGE,TX_GREEN);
+        drawButton(1010,10, "Многоэтажки",TX_YELLOW,TX_CYAN);
 
         if (1)
         {
@@ -82,17 +89,13 @@ int main()
         }
 
         if (drawHouse)
-        {
-            Win32::TransparentBlt (txDC(),1300,250,200,100,object0,0,0,1536,1152, TX_WHITE);
-            Win32::TransparentBlt (txDC(),1300,400,200,100,object1,0,0,564,300, TX_WHITE);
-            Win32::TransparentBlt (txDC(),1300,550,200,100,object2,0,0,571,393, TX_WHITE);
-        }
+            for (int i = 0; i <= 2; i++)
+                Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
+
         else
-        {
-            Win32::TransparentBlt (txDC(),1300,250,200,100,object7,0,0,900,197, TX_WHITE);
-            Win32::TransparentBlt (txDC(),1300,400,200,100,object8,0,0,512,355, TX_WHITE);
-            Win32::TransparentBlt (txDC(),1300,550,200,100,object9,0,0,650,400, TX_WHITE);
-        }
+            for (int i = 3; i <= 5; i++)
+                Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
+
 
 
 
