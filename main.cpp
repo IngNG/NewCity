@@ -37,6 +37,7 @@ int main()
     txTextCursor (false);
     bool drawHouse = false;
     bool drawPark = false;
+    bool drawNature = false;
     bool drawObject = false;
     bool drawObject1 = false;
     bool drawObject2 = false;
@@ -44,32 +45,34 @@ int main()
     bool drawObject4 = false;
     bool drawObject5 = false;
     bool drawObject6 = false;
+    bool drawObject7 = false;
+    bool drawObject8 = false;
+    bool drawObject9 = false;
+    bool drawObject10 = false;
+    bool drawObject11 = false;
+    bool drawObject12 = false;
 
-        HDC  object0 = txLoadImage ("Дома/dom1.bmp");
-        HDC  object1 = txLoadImage ("Дома/dom2.bmp");
-        HDC  object2 = txLoadImage ("Дома/dom3.bmp");
-        HDC  object3 = txLoadImage ("Дома/dom4.bmp");
-        HDC  object4 = txLoadImage ("Дома/dom5.bmp");
-        HDC  object5 = txLoadImage ("Дома/dom6.bmp");
-        HDC  object6 = txLoadImage ("Дома/mnogoetajka1.bmp");
-        HDC  object7 = txLoadImage ("Парки/park1.bmp");
-        HDC  object8 = txLoadImage ("Парки/park2.bmp");
-        HDC  object9 = txLoadImage ("Парки/park3.bmp");
-
-        Picture pic[100];
-        pic[0] = {1300, 250, 615, 369, object0};
-        pic[1] = {1300, 400, 564, 300, object1};
-        pic[2] = {1300, 550, 571, 393, object2};
-        pic[3] = {1300, 250, 350, 324, object3};
-        pic[4] = {1300, 400, 407, 264, object4};
-        pic[5] = {1300, 550, 495, 293, object5};
-        pic[6] = {1300, 550, 520, 342, object6};
-        pic[7] = {1300, 250, 900, 197, object7};
-        pic[8] = {1300, 400, 512, 355, object8};
-        pic[9] = {1300, 550, 650, 400, object9};
+    Picture pic[100];
+    pic[0] = {1300, 250, 615, 369, txLoadImage ("Дома/dom1.bmp")};
+    pic[1] = {1300, 400, 564, 300, txLoadImage ("Дома/dom2.bmp")};
+    pic[2] = {1300, 550, 571, 393, txLoadImage ("Дома/dom3.bmp")};
+    pic[3] = {1300, 250, 350, 324, txLoadImage ("Дома/dom4.bmp")};
+    pic[4] = {1300, 400, 407, 264, txLoadImage ("Дома/dom5.bmp")};
+    pic[5] = {1300, 550, 495, 293, txLoadImage ("Дома/dom6.bmp")};
+    pic[6] = {1300, 550, 520, 342, txLoadImage ("Дома/mnogoetajka1.bmp")};
+    pic[7] = {1300, 250, 900, 195, txLoadImage ("Парки/park1.bmp")};
+    pic[8] = {1300, 400, 512, 355, txLoadImage ("Парки/park2.bmp")};
+    pic[9] = {1300, 550, 650, 400, txLoadImage ("Парки/park3.bmp")};
+    pic[10] = {1300, 250, 512, 429, txLoadImage ("Деревья/tree1.bmp")};
+    pic[11] = {1300, 400, 414, 484, txLoadImage ("Деревья/tree2.bmp")};
+    pic[12] = {1300, 550, 214, 236, txLoadImage ("Деревья/tree3.bmp")};
+    pic[13] = {1300, 250, 408, 581, txLoadImage ("Деревья/tree4.bmp")};
+    pic[14] = {1300, 400, 423, 512, txLoadImage ("Деревья/tree5.bmp")};
+    pic[15] = {1300, 550, 550, 412, txLoadImage ("Деревья/tree6.bmp")};
 
 
-    while(true)
+    bool gameOver = false;
+    while (!gameOver)
     {
         txBegin();
         txSetFillColour(TX_GRAY);
@@ -92,13 +95,22 @@ int main()
         {
             drawHouse = true;
             drawPark = false;
+            drawNature = false;
         }
-
         else if(txMouseButtons() == 1 &&
             txMouseX() >= 210 &&  txMouseX() <= 400 &&
             txMouseY() >= 10 && txMouseY() <= 140)
         {
             drawPark = true;
+            drawHouse = false;
+            drawNature = false;
+        }
+        else if(txMouseButtons() == 1 &&
+            txMouseX() >= 610 &&  txMouseX() <= 800 &&
+            txMouseY() >= 10 && txMouseY() <= 140)
+        {
+            drawNature = true;
+            drawPark = false;
             drawHouse = false;
         }
 
@@ -107,7 +119,10 @@ int main()
             for (int i = 0; i <= 2; i++)
                 Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
         else if(drawPark)
-            for (int i = 3; i <= 5; i++)
+            for (int i = 7; i <= 9; i++)
+                Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
+        else if(drawNature)
+            for (int i = 10; i <= 16; i++)
                 Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
 
         if (txMouseButtons() == 1 &&
@@ -152,27 +167,89 @@ int main()
             drawObject6 = true;
         }
 
+        if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 250 && txMouseY() <= 350 && drawNature )
+        {
+            drawObject7 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 400 && txMouseY() <= 500 && drawNature )
+        {
+            drawObject8 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 550 && txMouseY() <= 650 && drawNature )
+        {
+            drawObject9 = true;
+        }
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 250 && txMouseY() <= 350 && drawNature )
+        {
+            drawObject10 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 400 && txMouseY() <= 500 && drawNature )
+        {
+            drawObject11 = true;
+        }
+
+        else if (txMouseButtons() == 1 &&
+            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
+            txMouseY() >= 550 && txMouseY() <= 650 && drawNature )
+        {
+            drawObject12 = true;
+        }
+
 
 
         if (drawObject1)
-            Win32::TransparentBlt (txDC(),325,250,200,100,object0,0,0,615,369, TX_WHITE);
+            Win32::TransparentBlt (txDC(),325,250,200,100,pic[0].object,0,0,615,369, TX_WHITE);
         if (drawObject2)
-            Win32::TransparentBlt (txDC(),325,400,200,100,object1,0,0,564,300, TX_WHITE);
+            Win32::TransparentBlt (txDC(),325,400,200,100,pic[1].object,0,0,564,300, TX_WHITE);
         if (drawObject3)
-            Win32::TransparentBlt (txDC(),325,550,200,100,object2,0,0,571,393, TX_WHITE);
+            Win32::TransparentBlt (txDC(),325,550,200,100,pic[2].object,0,0,571,393, TX_WHITE);
 
         if (drawObject4)
-            Win32::TransparentBlt (txDC(),325,250,200,100,object7,0,0,900,195, TX_WHITE);
+            Win32::TransparentBlt (txDC(),325,250,200,100,pic[7].object,0,0,900,195, TX_WHITE);
         if (drawObject5)
-            Win32::TransparentBlt (txDC(),325,400,200,100,object8,0,0,512,355, TX_WHITE);
+            Win32::TransparentBlt (txDC(),325,400,200,100,pic[8].object,0,0,512,355, TX_WHITE);
         if (drawObject6)
-            Win32::TransparentBlt (txDC(),325,550,200,100,object9,0,0,650,400, TX_WHITE);
+            Win32::TransparentBlt (txDC(),325,550,200,100,pic[9].object,0,0,650,400, TX_WHITE);
 
+        if (drawObject7)
+            Win32::TransparentBlt (txDC(),325,550,200,100,pic[10].object,0,0,650,400, TX_WHITE);
+        if (drawObject8)
+            Win32::TransparentBlt (txDC(),325,550,200,100,pic[11].object,0,0,650,400, TX_WHITE);
+        if (drawObject9)
+            Win32::TransparentBlt (txDC(),325,550,200,100,pic[12].object,0,0,650,400, TX_WHITE);
+        if (drawObject10)
+            Win32::TransparentBlt (txDC(),325,550,200,100,pic[13].object,0,0,650,400, TX_WHITE);
+        if (drawObject11)
+            Win32::TransparentBlt (txDC(),325,550,200,100,pic[14].object,0,0,650,400, TX_WHITE);
+        if (drawObject12)
+            Win32::TransparentBlt (txDC(),325,550,200,100,pic[15].object,0,0,650,400, TX_WHITE);
+
+        if (GetAsyncKeyState(VK_ESCAPE))
+        {
+            gameOver = true;
+        }
 
 
         txSleep(20);
         txEnd();
     }
+
+
+    for (int i = 0; i <= 15; i++)
+        txDeleteDC(pic[i].object);
 
     return 0;
 }
