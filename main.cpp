@@ -1,7 +1,5 @@
 #include "TXLib.h"
 
-
-
 struct Picture
 {
     int x;
@@ -9,6 +7,7 @@ struct Picture
     int width;
     int height;
     HDC object;
+    string category;
 };
 
 struct Button
@@ -29,15 +28,28 @@ void drawButton(int x,int y,const char text[],COLORREF color,COLORREF color1)
     txSelectFont("ARIAL", 40);
     txDrawText(x,y,x + 190,y + 130,text);
 }
+bool Click(int x,int y)
+{
+if (txMouseButtons() == 1 &&
+    txMouseX() >= x &&  txMouseX() <= x + 190 &&
+    txMouseY() >= y &&  txMouseY() <= y + 130)
+    {
+    return true;
+    }
+else
+    return false;
+
+}
 
 int main()
 {
     txCreateWindow (1532 , 840);
-
     txTextCursor (false);
-    bool drawHouse = false;
-    bool drawPark = false;
-    bool drawNature = false;
+
+
+    string category = "Home";
+
+    bool Mnogoetajka1 = false;
     bool drawObject = false;
     bool drawObject1 = false;
     bool drawObject2 = false;
@@ -52,23 +64,24 @@ int main()
     bool drawObject11 = false;
     bool drawObject12 = false;
 
-    Picture pic[100];
-    pic[0] = {1300, 250, 615, 369, txLoadImage ("Дома/dom1.bmp")};
-    pic[1] = {1300, 400, 564, 300, txLoadImage ("Дома/dom2.bmp")};
-    pic[2] = {1300, 550, 571, 393, txLoadImage ("Дома/dom3.bmp")};
-    pic[3] = {1300, 250, 350, 324, txLoadImage ("Дома/dom4.bmp")};
-    pic[4] = {1300, 400, 407, 264, txLoadImage ("Дома/dom5.bmp")};
-    pic[5] = {1300, 550, 495, 293, txLoadImage ("Дома/dom6.bmp")};
-    pic[6] = {1300, 550, 520, 342, txLoadImage ("Дома/mnogoetajka1.bmp")};
-    pic[7] = {1300, 250, 900, 195, txLoadImage ("Парки/park1.bmp")};
-    pic[8] = {1300, 400, 512, 355, txLoadImage ("Парки/park2.bmp")};
-    pic[9] = {1300, 550, 650, 400, txLoadImage ("Парки/park3.bmp")};
-    pic[10] = {1300, 250, 512, 429, txLoadImage ("Деревья/tree1.bmp")};
-    pic[11] = {1300, 400, 414, 484, txLoadImage ("Деревья/tree2.bmp")};
-    pic[12] = {1300, 550, 214, 236, txLoadImage ("Деревья/tree3.bmp")};
-    pic[13] = {1300, 250, 408, 581, txLoadImage ("Деревья/tree4.bmp")};
-    pic[14] = {1300, 400, 423, 512, txLoadImage ("Деревья/tree5.bmp")};
-    pic[15] = {1300, 550, 550, 412, txLoadImage ("Деревья/tree6.bmp")};
+    const int N_PICS = 16;
+    Picture pic[N_PICS];
+    pic[0] = {1300, 250, 615, 369, txLoadImage ("Дома/dom1.bmp"), "Home"};
+    pic[1] = {1300, 400, 564, 300, txLoadImage ("Дома/dom2.bmp"), "Home"};
+    pic[2] = {1300, 550, 571, 393, txLoadImage ("Дома/dom3.bmp"), "Home"};
+    pic[3] = {1300, 250, 350, 324, txLoadImage ("Дома/dom4.bmp"), "Home"};
+    pic[4] = {1300, 400, 407, 264, txLoadImage ("Дома/dom5.bmp"), "Home"};
+    pic[5] = {1300, 550, 495, 293, txLoadImage ("Дома/dom6.bmp"), "Home"};
+    pic[6] = {1300, 550, 520, 342, txLoadImage ("Дома/mnogoetajka1.bmp"), "Mnogoetajka1"};
+    pic[7] = {1300, 250, 900, 195, txLoadImage ("Парки/park1.bmp"), "Park"};
+    pic[8] = {1300, 400, 512, 355, txLoadImage ("Парки/park2.bmp"), "Park"};
+    pic[9] = {1300, 550, 650, 400, txLoadImage ("Парки/park3.bmp"), "Park"};
+    pic[10] = {1300, 250, 512, 429, txLoadImage ("Деревья/tree1.bmp"), "Tree"};
+    pic[11] = {1300, 400, 414, 484, txLoadImage ("Деревья/tree2.bmp"), "Tree"};
+    pic[12] = {1300, 550, 214, 236, txLoadImage ("Деревья/tree3.bmp"), "Tree"};
+    pic[13] = {1300, 250, 408, 581, txLoadImage ("Деревья/tree4.bmp"), "Tree"};
+    pic[14] = {1300, 400, 423, 512, txLoadImage ("Деревья/tree5.bmp"), "Tree"};
+    pic[15] = {1300, 550, 550, 412, txLoadImage ("Деревья/tree6.bmp"), "Tree"};
 
 
     bool gameOver = false;
@@ -89,121 +102,103 @@ int main()
         drawButton(810,10, "Дороги",TX_ORANGE,TX_GREEN);
         drawButton(1010,10, "Многоэтажки",TX_YELLOW,TX_CYAN);
 
-        if (txMouseButtons() == 1 &&
-            txMouseX() >= 10 &&  txMouseX() <= 200 &&
-            txMouseY() >= 10 && txMouseY() <= 140 )
+        if (Click(10, 10))
         {
-            drawHouse = true;
-            drawPark = false;
-            drawNature = false;
+            category = "Home";
         }
-        else if(txMouseButtons() == 1 &&
-            txMouseX() >= 210 &&  txMouseX() <= 400 &&
-            txMouseY() >= 10 && txMouseY() <= 140)
+        else if(Click(210, 10))
         {
-            drawPark = true;
-            drawHouse = false;
-            drawNature = false;
+            category = "Park";
         }
-        else if(txMouseButtons() == 1 &&
-            txMouseX() >= 610 &&  txMouseX() <= 800 &&
-            txMouseY() >= 10 && txMouseY() <= 140)
+        else if(Click(410,10))
         {
-            drawNature = true;
-            drawPark = false;
-            drawHouse = false;
+            category = "Tree";
         }
 
 
-        if (drawHouse)
-            for (int i = 0; i <= 2; i++)
-                Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
-        else if(drawPark)
-            for (int i = 7; i <= 9; i++)
-                Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
-        else if(drawNature)
-            for (int i = 10; i <= 16; i++)
+        for (int i = 0; i < N_PICS; i++)
+            if(category == pic[i].category)
                 Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
 
         if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 250 && txMouseY() <= 350 && drawHouse )
+            txMouseY() >= 250 && txMouseY() <= 350 && category == "Home" )
         {
             drawObject1 = true;
         }
 
         else if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 400 && txMouseY() <= 500 && drawHouse )
+            txMouseY() >= 400 && txMouseY() <= 500 && category == "Home" )
         {
             drawObject2 = true;
         }
 
         else if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 550 && txMouseY() <= 650 && drawHouse)
+            txMouseY() >= 550 && txMouseY() <= 650 && category == "Home")
         {
             drawObject3 = true;
         }
 
         if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 250 && txMouseY() <= 350 && drawPark )
+            txMouseY() >= 250 && txMouseY() <= 350 && category == "Park" )
         {
             drawObject4 = true;
         }
 
         else if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 400 && txMouseY() <= 500 && drawPark )
+            txMouseY() >= 400 && txMouseY() <= 500 && category == "Park" )
         {
             drawObject5 = true;
         }
 
         else if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 550 && txMouseY() <= 650 && drawPark )
+            txMouseY() >= 550 && txMouseY() <= 650 && category == "Park" )
         {
             drawObject6 = true;
         }
 
         if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 250 && txMouseY() <= 350 && drawNature )
+            txMouseY() >= 250 && txMouseY() <= 350 && category == "Tree" )
         {
             drawObject7 = true;
         }
 
         else if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 400 && txMouseY() <= 500 && drawNature )
+            txMouseY() >= 400 && txMouseY() <= 500 && category == "Tree" )
         {
             drawObject8 = true;
         }
 
         else if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 550 && txMouseY() <= 650 && drawNature )
+            txMouseY() >= 550 && txMouseY() <= 650 && category == "Tree" )
         {
             drawObject9 = true;
         }
         else if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 250 && txMouseY() <= 350 && drawNature )
+            txMouseY() >= 250 && txMouseY() <= 350 && category == "Tree" )
         {
             drawObject10 = true;
         }
 
         else if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 400 && txMouseY() <= 500 && drawNature )
+            txMouseY() >= 400 && txMouseY() <= 500 && category == "Tree" )
         {
             drawObject11 = true;
         }
 
         else if (txMouseButtons() == 1 &&
             txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 550 && txMouseY() <= 650 && drawNature )
+            txMouseY() >= 550 && txMouseY() <= 650 && category == "Tree" )
         {
             drawObject12 = true;
         }
@@ -248,7 +243,7 @@ int main()
     }
 
 
-    for (int i = 0; i <= 15; i++)
+    for (int i = 0; i < N_PICS; i++)
         txDeleteDC(pic[i].object);
 
     return 0;
