@@ -14,12 +14,13 @@ struct Button
 {
     int x;
     int y;
-    const char text[];
+    const char* text;
     COLORREF colorButton;
     COLORREF colorText;
+    string category;
 };
 
-void drawButton(int x,int y,const char text[],COLORREF color,COLORREF color1)
+void drawButton(int x,int y,const char* text,COLORREF color,COLORREF color1)
 {
     txSetColour(TX_BLACK);
     txSetFillColour(color);
@@ -30,15 +31,14 @@ void drawButton(int x,int y,const char text[],COLORREF color,COLORREF color1)
 }
 bool Click(int x,int y)
 {
-if (txMouseButtons() == 1 &&
-    txMouseX() >= x &&  txMouseX() <= x + 190 &&
-    txMouseY() >= y &&  txMouseY() <= y + 130)
+    if (txMouseButtons() == 1 &&
+        txMouseX() >= x &&  txMouseX() <= x + 190 &&
+        txMouseY() >= y &&  txMouseY() <= y + 130)
     {
-    return true;
+        return true;
     }
-else
-    return false;
-
+    else
+        return false;
 }
 
 int main()
@@ -83,6 +83,34 @@ int main()
     pic[14] = {1300, 400, 423, 512, txLoadImage ("Деревья/tree5.bmp"), "Tree"};
     pic[15] = {1300, 550, 550, 412, txLoadImage ("Деревья/tree6.bmp"), "Tree"};
 
+    const int N_PICS2 = 13;
+    Picture center[N_PICS2];
+    center[0] = {325, 250, 200, 100,pic[0].object, pic[0].category};
+   /* center[1] = {300, 400, 200, 100,pic[1].object, 0,0,564,300, TX_WHITE);
+    center[2] = {300, 550, 200, 100,pic[2].object, 0,0,571,393, TX_WHITE);
+    center[3] = {300, 250, 200, 100,pic[3].object, 0,0,900,195, TX_WHITE);
+    center[4] = {300, 400, 200, 100,pic[4].object, 0,0,512,355, TX_WHITE);
+    center[5] = {300, 550, 200, 100,pic[5].object, 0,0,650,400, TX_WHITE);
+    center[6] = {300, 550, 200, 100,pic[6].object, 0,0,650,400, TX_WHITE);
+    center[7] = {300, 550, 200, 100,pic[7].object, 0,0,650,400, TX_WHITE);
+    center[8] = {300, 550, 200, 100,pic[8].object, 0,0,650,400, TX_WHITE);
+    center[9] = {300, 550, 200, 100,pic[9].object, 0,0,650,400, TX_WHITE);
+    center[10] = {300, 550, 200, 100,pic[10].object, 0,0,650,400, TX_WHITE);
+    center[11] = {300, 550, 200, 100,pic[11].object, 0,0,650,400, TX_WHITE);*/
+
+    const int N_Button = 6;
+    Button buttons[N_Button];
+    buttons[0] = {10, 10, "Дома",TX_CYAN,TX_YELLOW, "Home"};
+    buttons[1] = {210, 10, "Парки",TX_GREEN,TX_ORANGE, "Park"};
+    buttons[2] = {410, 10, "Здании",TX_BLUE,TX_MAGENTA};
+    buttons[3] = {610, 10, "Природа",TX_MAGENTA,TX_BLUE, "Tree"};
+    buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN};
+    buttons[5] = {1010, 10, "Многоэтажки",TX_YELLOW,TX_CYAN};
+
+
+
+
+
 
     bool gameOver = false;
     while (!gameOver)
@@ -95,25 +123,15 @@ int main()
         txSetFillColour(TX_WHITE);
         txRectangle(0,150,1300,840);
 
-        drawButton(10,10, "Дома",TX_CYAN,TX_YELLOW);
-        drawButton(210,10, "Парки",TX_GREEN,TX_ORANGE);
-        drawButton(410,10, "Здании",TX_BLUE,TX_MAGENTA);
-        drawButton(610,10, "Природа",TX_MAGENTA,TX_BLUE);
-        drawButton(810,10, "Дороги",TX_ORANGE,TX_GREEN);
-        drawButton(1010,10, "Многоэтажки",TX_YELLOW,TX_CYAN);
 
-        if (Click(10, 10))
-        {
-            category = "Home";
-        }
-        else if(Click(210, 10))
-        {
-            category = "Park";
-        }
-        else if(Click(410,10))
-        {
-            category = "Tree";
-        }
+        for (int i = 0; i < N_Button; i++)
+            drawButton(buttons[i].x, buttons[i].y, buttons[i].text, buttons[i].colorButton, buttons[i].colorText);
+
+
+
+        for (int i = 0; i < N_Button; i++)
+            if (Click(buttons[i].x, buttons[i].y))
+                category = buttons[i].category;
 
 
         for (int i = 0; i < N_PICS; i++)
@@ -206,7 +224,7 @@ int main()
 
 
         if (drawObject1)
-            Win32::TransparentBlt (txDC(),325,250,200,100,pic[0].object,0,0,615,369, TX_WHITE);
+            Win32::TransparentBlt (txDC(),center[0].x,center[0].y,200,100,center[0].object,0,0,615,369, TX_WHITE);
         if (drawObject2)
             Win32::TransparentBlt (txDC(),325,400,200,100,pic[1].object,0,0,564,300, TX_WHITE);
         if (drawObject3)
