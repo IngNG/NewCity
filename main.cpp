@@ -8,7 +8,10 @@ int main()
     txTextCursor (false);
 
 
+
     string category = "Home";
+
+    int n_active = 0;
 
     bool Mnogoetajka1 = false;
     bool drawObject = false;
@@ -107,6 +110,38 @@ int main()
         }
 
 
+
+
+
+        if(GetAsyncKeyState(VK_LEFT))
+        {
+            center[n_active].x = center[n_active].x  - 5;
+        }
+
+        if(GetAsyncKeyState(VK_RIGHT))
+        {
+            center[n_active].x = center[n_active].x  + 5;
+        }
+
+        if(GetAsyncKeyState(VK_UP))
+        {
+            center[n_active].y = center[n_active].y  - 5 ;
+        }
+
+        if(GetAsyncKeyState(VK_DOWN))
+        {
+            center[n_active].y = center[n_active].y  + 5;
+        }
+
+        for (int i = 0; i < 3; i = i + 1)
+        {
+            if (txMouseButtons() == 1 &&
+                txMouseX() >= center[i].x &&  txMouseX() <= center[i].x + 200 &&
+                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && category == "Home" )
+            {
+                n_active = i;
+            }
+        }
 
 
         if (GetAsyncKeyState(VK_ESCAPE))
