@@ -28,7 +28,7 @@ int main()
     bool drawObject11 = false;
     bool drawObject12 = false;
 
-    const int N_PICS = 16;
+    const int N_PICS = 21;
     Picture pic[N_PICS];
     pic[0] = {1300, 200, 615, 369, txLoadImage ("Дома/dom1.bmp"), "Home"};
     pic[1] = {1300, 300, 564, 300, txLoadImage ("Дома/dom2.bmp"), "Home"};
@@ -46,6 +46,11 @@ int main()
     pic[13] = {1300, 250, 408, 581, txLoadImage ("Деревья/tree4.bmp"), "Tree"};
     pic[14] = {1300, 400, 423, 512, txLoadImage ("Деревья/tree5.bmp"), "Tree"};
     pic[15] = {1300, 550, 550, 412, txLoadImage ("Деревья/tree6.bmp"), "Tree"};
+    pic[16] = {1300, 200, 300, 196, txLoadImage ("Zdania/Zdania1.bmp"), "Zdania"};
+    pic[17] = {1300, 300, 256, 256, txLoadImage ("Zdania/Zdania2.bmp"), "Zdania"};
+    pic[18] = {1300, 400, 360, 360, txLoadImage ("Zdania/Zdania3.bmp"), "Zdania"};
+    pic[19] = {1300, 500, 260, 260, txLoadImage ("Zdania/Zdania4.bmp"), "Zdania"};
+    pic[20] = {1300, 600, 360, 360, txLoadImage ("Zdania/Zdania5.bmp"), "Zdania"};
 
     int n_pics = 0;
     Picture center[2000];
@@ -54,7 +59,7 @@ int main()
     Button buttons[N_Button];
     buttons[0] = {10, 10, "Дома",TX_CYAN,TX_YELLOW, "Home"};
     buttons[1] = {210, 10, "Парки",TX_GREEN,TX_ORANGE, "Park"};
-    buttons[2] = {410, 10, "Здании",TX_BLUE,TX_MAGENTA};
+    buttons[2] = {410, 10, "Здании",TX_BLUE,TX_MAGENTA, "Zdania"};
     buttons[3] = {610, 10, "Природа",TX_MAGENTA,TX_BLUE, "Tree"};
     buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN};
     buttons[5] = {1010, 10, "Многоэтажки",TX_YELLOW,TX_CYAN};
