@@ -47,7 +47,10 @@ int main()
     txTextCursor (false);
 
 
+
     string category = "Home";
+
+    int n_active = 0;
 
     bool Mnogoetajka1 = false;
     bool drawObject = false;
@@ -83,12 +86,12 @@ int main()
     pic[14] = {1300, 400, 423, 512, txLoadImage ("Деревья/tree5.bmp"), "Tree"};
     pic[15] = {1300, 550, 550, 412, txLoadImage ("Деревья/tree6.bmp"), "Tree"};
 
-    const int N_PICS2 = 13;
+    const int N_PICS2 = 3;
     Picture center[N_PICS2];
     center[0] = {325, 250, 200, 100,pic[0].object, pic[0].category};
-   /* center[1] = {300, 400, 200, 100,pic[1].object, 0,0,564,300, TX_WHITE);
-    center[2] = {300, 550, 200, 100,pic[2].object, 0,0,571,393, TX_WHITE);
-    center[3] = {300, 250, 200, 100,pic[3].object, 0,0,900,195, TX_WHITE);
+    center[1] = {300, 400, 200, 100,pic[1].object, pic[1].category};
+    center[2] = {300, 550, 200, 100,pic[2].object, pic[2].category};
+   /* center[3] = {300, 250, 200, 100,pic[3].object, 0,0,900,195, TX_WHITE);
     center[4] = {300, 400, 200, 100,pic[4].object, 0,0,512,355, TX_WHITE);
     center[5] = {300, 550, 200, 100,pic[5].object, 0,0,650,400, TX_WHITE);
     center[6] = {300, 550, 200, 100,pic[6].object, 0,0,650,400, TX_WHITE);
@@ -159,96 +162,43 @@ int main()
             drawObject3 = true;
         }
 
-        if (txMouseButtons() == 1 &&
-            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 250 && txMouseY() <= 350 && category == "Park" )
+
+        if(GetAsyncKeyState(VK_LEFT))
         {
-            drawObject4 = true;
+            center[n_active].x = center[n_active].x  - 5;
         }
 
-        else if (txMouseButtons() == 1 &&
-            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 400 && txMouseY() <= 500 && category == "Park" )
+        if(GetAsyncKeyState(VK_RIGHT))
         {
-            drawObject5 = true;
+            center[n_active].x = center[n_active].x  + 5;
         }
 
-        else if (txMouseButtons() == 1 &&
-            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 550 && txMouseY() <= 650 && category == "Park" )
+        if(GetAsyncKeyState(VK_UP))
         {
-            drawObject6 = true;
+            center[n_active].y = center[n_active].y  - 5 ;
         }
 
-        if (txMouseButtons() == 1 &&
-            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 250 && txMouseY() <= 350 && category == "Tree" )
+        if(GetAsyncKeyState(VK_DOWN))
         {
-            drawObject7 = true;
+            center[n_active].y = center[n_active].y  + 5;
         }
 
-        else if (txMouseButtons() == 1 &&
-            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 400 && txMouseY() <= 500 && category == "Tree" )
+        for (int i = 0; i < 3; i = i + 1)
         {
-            drawObject8 = true;
+            if (txMouseButtons() == 1 &&
+                txMouseX() >= center[i].x &&  txMouseX() <= center[i].x + 200 &&
+                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && category == "Home" )
+            {
+                n_active = i;
+            }
         }
-
-        else if (txMouseButtons() == 1 &&
-            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 550 && txMouseY() <= 650 && category == "Tree" )
-        {
-            drawObject9 = true;
-        }
-        else if (txMouseButtons() == 1 &&
-            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 250 && txMouseY() <= 350 && category == "Tree" )
-        {
-            drawObject10 = true;
-        }
-
-        else if (txMouseButtons() == 1 &&
-            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 400 && txMouseY() <= 500 && category == "Tree" )
-        {
-            drawObject11 = true;
-        }
-
-        else if (txMouseButtons() == 1 &&
-            txMouseX() >= 1325 &&  txMouseX() <= 1525 &&
-            txMouseY() >= 550 && txMouseY() <= 650 && category == "Tree" )
-        {
-            drawObject12 = true;
-        }
-
-
 
         if (drawObject1)
             Win32::TransparentBlt (txDC(),center[0].x,center[0].y,200,100,center[0].object,0,0,615,369, TX_WHITE);
         if (drawObject2)
-            Win32::TransparentBlt (txDC(),325,400,200,100,pic[1].object,0,0,564,300, TX_WHITE);
+            Win32::TransparentBlt (txDC(),center[1].x,center[1].y,200,100,center[1].object,0,0,564,300, TX_WHITE);
         if (drawObject3)
-            Win32::TransparentBlt (txDC(),325,550,200,100,pic[2].object,0,0,571,393, TX_WHITE);
-
-        if (drawObject4)
-            Win32::TransparentBlt (txDC(),325,250,200,100,pic[7].object,0,0,900,195, TX_WHITE);
-        if (drawObject5)
-            Win32::TransparentBlt (txDC(),325,400,200,100,pic[8].object,0,0,512,355, TX_WHITE);
-        if (drawObject6)
-            Win32::TransparentBlt (txDC(),325,550,200,100,pic[9].object,0,0,650,400, TX_WHITE);
-
-        if (drawObject7)
-            Win32::TransparentBlt (txDC(),325,550,200,100,pic[10].object,0,0,650,400, TX_WHITE);
-        if (drawObject8)
-            Win32::TransparentBlt (txDC(),325,550,200,100,pic[11].object,0,0,650,400, TX_WHITE);
-        if (drawObject9)
-            Win32::TransparentBlt (txDC(),325,550,200,100,pic[12].object,0,0,650,400, TX_WHITE);
-        if (drawObject10)
-            Win32::TransparentBlt (txDC(),325,550,200,100,pic[13].object,0,0,650,400, TX_WHITE);
-        if (drawObject11)
-            Win32::TransparentBlt (txDC(),325,550,200,100,pic[14].object,0,0,650,400, TX_WHITE);
-        if (drawObject12)
-            Win32::TransparentBlt (txDC(),325,550,200,100,pic[15].object,0,0,650,400, TX_WHITE);
+            Win32::TransparentBlt (txDC(),center[2].x,center[2].y,200,100,center[2].object,0,0,571,393, TX_WHITE);
 
         if (GetAsyncKeyState(VK_ESCAPE))
         {
