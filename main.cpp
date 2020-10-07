@@ -14,19 +14,7 @@ int main()
     int n_active = 0;
 
     bool Mnogoetajka1 = false;
-    bool drawObject = false;
-    bool drawObject1 = false;
-    bool drawObject2 = false;
-    bool drawObject3 = false;
-    bool drawObject4 = false;
-    bool drawObject5 = false;
-    bool drawObject6 = false;
-    bool drawObject7 = false;
-    bool drawObject8 = false;
-    bool drawObject9 = false;
-    bool drawObject10 = false;
-    bool drawObject11 = false;
-    bool drawObject12 = false;
+    bool LKM = false;
 
     const int N_PICS = 21;
     Picture pic[N_PICS];
@@ -81,7 +69,20 @@ int main()
         txSetFillColour(TX_WHITE);
         txRectangle(0,150,MAX_X,MAX_Y);
 
-
+    if(LKM)
+    {
+        for (int i = 0; i < N_PICS; i++)
+        {
+            if (txMouseButtons() == 1 &&
+                txMouseX() >= center[i].x && txMouseX() <= center[i].x + 200 &&
+                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100)
+            {
+                //center[n_active].x = txMouseX() - 30;
+                //center[n_active].y = txMouseY() - 30;
+                n_active = i;
+            }
+        }
+    }
         for (int i = 0; i < N_Button; i++)
             drawButton(buttons[i].x, buttons[i].y, buttons[i].text, buttons[i].colorButton, buttons[i].colorText);
 
@@ -118,7 +119,7 @@ int main()
 
 
 
-        if(GetAsyncKeyState(VK_LEFT))
+     /*   if(GetAsyncKeyState(VK_LEFT))
         {
             center[n_active].x = center[n_active].x  - 5;
         }
@@ -136,7 +137,7 @@ int main()
         if(GetAsyncKeyState(VK_DOWN))
         {
             center[n_active].y = center[n_active].y  + 5;
-        }
+        }*/
 
         if(GetAsyncKeyState(VK_OEM_PLUS))
         {
