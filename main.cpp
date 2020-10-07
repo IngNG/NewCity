@@ -97,7 +97,7 @@ int main()
         for (int i = 0; i < n_pics; i++)
         {
             if (center[i].visible)
-            Win32::TransparentBlt (txDC(),center[i].x,center[i].y,200,100,center[i].object,0,0,center[i].width,center[i].height, TX_WHITE);
+            Win32::TransparentBlt (txDC(),center[i].x,center[i].y,center[i].widthPic,center[i].heightPic,center[i].object,0,0,center[i].width,center[i].height, TX_WHITE);
         }
 
 
@@ -108,7 +108,7 @@ int main()
                 txMouseX() >= pic[i].x && txMouseX() <= pic[i].x + 200 &&
                 txMouseY() >= pic[i].y && txMouseY() <= pic[i].y + 100 && category == pic[i].category )
             {
-                center[n_pics] = {random(0,MAX_X - 200), random(150,840 - 100),  pic[i].width,  pic[i].height, pic[i].object, pic[i].category, true};
+                center[n_pics] = {random(0,MAX_X - 200), random(150,840 - 100),  pic[i].width,  pic[i].height, pic[i].object, pic[i].category, true, 200, 100};
                 n_pics++;
                 txSleep(200);
             }
@@ -138,6 +138,16 @@ int main()
             center[n_active].y = center[n_active].y  + 5;
         }
 
+        if(GetAsyncKeyState(VK_OEM_PLUS))
+        {
+            center[n_active].widthPic = center[n_active].widthPic * 1.05;
+            center[n_active].heightPic = center[n_active].heightPic * 1.05;
+        }
+        if(GetAsyncKeyState(VK_OEM_MINUS))
+        {
+            center[n_active].widthPic = center[n_active].widthPic / 1.05;
+            center[n_active].heightPic = center[n_active].heightPic / 1.05;
+        }
         for (int i = 0; i < 3; i = i + 1)
         {
             if (txMouseButtons() == 1 &&
