@@ -83,26 +83,18 @@ int main()
             }
         }
     }
-        for (int i = 0; i < N_Button; i++)
-            drawButton(buttons[i].x, buttons[i].y, buttons[i].text, buttons[i].colorButton, buttons[i].colorText);
+    drawAllButtons(N_Button, buttons);
 
-        for (int i = 0; i < N_Button; i++)
-            if (Click(buttons[i].x, buttons[i].y))
-                category = buttons[i].category;
 
-        for (int i = 0; i < N_PICS; i++)
-            if(category == pic[i].category)
-                Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
+    category = selectCategory(N_Button, buttons, category);
+
+    drawRightPictures(N_PICS, pic, category);
+
 
         //Рисование центральных картинок
-        for (int i = 0; i < n_pics; i++)
-        {
-            if (center[i].visible)
-            Win32::TransparentBlt (txDC(),center[i].x,center[i].y,center[i].widthPic,center[i].heightPic,center[i].object,0,0,center[i].width,center[i].height, TX_WHITE);
-        }
+    drawCentralPictures(n_pics, center);
 
-
-
+        //появление активной картинки
         for (int i = 0; i < N_PICS; i++)
         {
             if (txMouseButtons() == 1 &&
