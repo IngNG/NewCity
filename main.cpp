@@ -18,22 +18,22 @@ int main()
 
     const int N_PICS = 21;
     Picture pic[N_PICS];
-    pic[0] = {1300, 200, 615, 369, txLoadImage ("Г„Г®Г¬Г /dom1.bmp"), "Home"};
-    pic[1] = {1300, 300, 564, 300, txLoadImage ("Г„Г®Г¬Г /dom2.bmp"), "Home"};
-    pic[2] = {1300, 400, 571, 393, txLoadImage ("Г„Г®Г¬Г /dom3.bmp"), "Home"};
-    pic[3] = {1300, 500, 350, 324, txLoadImage ("Г„Г®Г¬Г /dom4.bmp"), "Home"};
-    pic[4] = {1300, 600, 407, 264, txLoadImage ("Г„Г®Г¬Г /dom5.bmp"), "Home"};
-    pic[5] = {1300, 700, 495, 293, txLoadImage ("Г„Г®Г¬Г /dom6.bmp"), "Home"};
-    pic[6] = {1300, 550, 520, 342, txLoadImage ("Г„Г®Г¬Г /mnogoetajka1.bmp"), "Mnogoetajka1"};
-    pic[7] = {1300, 250, 900, 195, txLoadImage ("ГЏГ Г°ГЄГЁ/park1.bmp"), "Park"};
-    pic[8] = {1300, 400, 512, 355, txLoadImage ("ГЏГ Г°ГЄГЁ/park2.bmp"), "Park"};
-    pic[9] = {1300, 550, 650, 400, txLoadImage ("ГЏГ Г°ГЄГЁ/park3.bmp"), "Park"};
-    pic[10] = {1300, 250, 512, 429, txLoadImage ("Г„ГҐГ°ГҐГўГјГї/tree1.bmp"), "Tree"};
-    pic[11] = {1300, 400, 414, 484, txLoadImage ("Г„ГҐГ°ГҐГўГјГї/tree2.bmp"), "Tree"};
-    pic[12] = {1300, 550, 214, 236, txLoadImage ("Г„ГҐГ°ГҐГўГјГї/tree3.bmp"), "Tree"};
-    pic[13] = {1300, 250, 408, 581, txLoadImage ("Г„ГҐГ°ГҐГўГјГї/tree4.bmp"), "Tree"};
-    pic[14] = {1300, 400, 423, 512, txLoadImage ("Г„ГҐГ°ГҐГўГјГї/tree5.bmp"), "Tree"};
-    pic[15] = {1300, 550, 550, 412, txLoadImage ("Г„ГҐГ°ГҐГўГјГї/tree6.bmp"), "Tree"};
+    pic[0] = {1300, 200, 615, 369, txLoadImage ("Дома/dom1.bmp"), "Home"};
+    pic[1] = {1300, 300, 564, 300, txLoadImage ("Дома/dom2.bmp"), "Home"};
+    pic[2] = {1300, 400, 571, 393, txLoadImage ("Дома/dom3.bmp"), "Home"};
+    pic[3] = {1300, 500, 350, 324, txLoadImage ("Дома/dom4.bmp"), "Home"};
+    pic[4] = {1300, 600, 407, 264, txLoadImage ("Дома/dom5.bmp"), "Home"};
+    pic[5] = {1300, 700, 495, 293, txLoadImage ("Дома/dom6.bmp"), "Home"};
+    pic[6] = {1300, 550, 520, 342, txLoadImage ("Дома/mnogoetajka1.bmp"), "Mnogoetajka1"};
+    pic[7] = {1300, 250, 900, 195, txLoadImage ("Парки/park1.bmp"), "Park"};
+    pic[8] = {1300, 400, 512, 355, txLoadImage ("Парки/park2.bmp"), "Park"};
+    pic[9] = {1300, 550, 650, 400, txLoadImage ("Парки/park3.bmp"), "Park"};
+    pic[10] = {1300, 250, 512, 429, txLoadImage ("Деревья/tree1.bmp"), "Tree"};
+    pic[11] = {1300, 400, 414, 484, txLoadImage ("Деревья/tree2.bmp"), "Tree"};
+    pic[12] = {1300, 550, 214, 236, txLoadImage ("Деревья/tree3.bmp"), "Tree"};
+    pic[13] = {1300, 250, 408, 581, txLoadImage ("Деревья/tree4.bmp"), "Tree"};
+    pic[14] = {1300, 400, 423, 512, txLoadImage ("Деревья/tree5.bmp"), "Tree"};
+    pic[15] = {1300, 550, 550, 412, txLoadImage ("Деревья/tree6.bmp"), "Tree"};
     pic[16] = {1300, 200, 300, 196, txLoadImage ("Zdania/Zdania1.bmp"), "Zdania"};
     pic[17] = {1300, 300, 256, 256, txLoadImage ("Zdania/Zdania2.bmp"), "Zdania"};
     pic[18] = {1300, 400, 360, 360, txLoadImage ("Zdania/Zdania3.bmp"), "Zdania"};
@@ -45,12 +45,12 @@ int main()
 
     const int N_Button = 6;
     Button buttons[N_Button];
-    buttons[0] = {10, 10, "Г„Г®Г¬Г ",TX_CYAN,TX_YELLOW, "Home"};
-    buttons[1] = {210, 10, "ГЏГ Г°ГЄГЁ",TX_GREEN,TX_ORANGE, "Park"};
-    buttons[2] = {410, 10, "Г‡Г¤Г Г­ГЁГЁ",TX_BLUE,TX_MAGENTA, "Zdania"};
-    buttons[3] = {610, 10, "ГЏГ°ГЁГ°Г®Г¤Г ",TX_MAGENTA,TX_BLUE, "Tree"};
-    buttons[4] = {810, 10, "Г„Г®Г°Г®ГЈГЁ",TX_ORANGE,TX_GREEN};
-    buttons[5] = {1010, 10, "ГЊГ­Г®ГЈГ®ГЅГІГ Г¦ГЄГЁ",TX_YELLOW,TX_CYAN};
+    buttons[0] = {10, 10, "Дома",TX_CYAN,TX_YELLOW, "Home"};
+    buttons[1] = {210, 10, "Парки",TX_GREEN,TX_ORANGE, "Park"};
+    buttons[2] = {410, 10, "Здании",TX_BLUE,TX_MAGENTA, "Zdania"};
+    buttons[3] = {610, 10, "Природа",TX_MAGENTA,TX_BLUE, "Tree"};
+    buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN};
+    buttons[5] = {1010, 10, "Многоэтажки",TX_YELLOW,TX_CYAN};
 
 
 
@@ -69,7 +69,7 @@ int main()
         txSetFillColour(TX_WHITE);
         txRectangle(0,150,MAX_X,MAX_Y);
 
-        for (int i = 0; i < N_PICS; i++)
+        for (int i = 0; i < n_pics; i++)
         {
             if (txMouseButtons() == 1 &&
                 txMouseX() >= center[n_active].x && txMouseX() <= center[n_active].x + 200 &&
@@ -78,29 +78,28 @@ int main()
                 n_active = i;
             }
         }
-    }
-    drawAllButtons(N_Button, buttons);
 
-  
+        drawAllButtons(N_Button, buttons);
+
+
         if(n_active >=0)
         {
             center[n_active].x = txMouseX() - 60;
             center[n_active].y = txMouseY() - 50;
         }
 
-        if(txMouseButtons() !=1)
+        if(txMouseButtons() == 0)
             n_active = -100;
 
-  
-    category = selectCategory(N_Button, buttons, category);
 
-    drawRightPictures(N_PICS, pic, category);
+        category = selectCategory(N_Button, buttons, category);
 
+        drawRightPictures(N_PICS, pic, category);
 
-        //ГђГЁГ±Г®ГўГ Г­ГЁГҐ Г¶ГҐГ­ГІГ°Г Г«ГјГ­Г»Гµ ГЄГ Г°ГІГЁГ­Г®ГЄ
-    drawCentralPictures(n_pics, center);
+        //Рисование центральных картинок
+        drawCentralPictures(n_pics, center);
 
-        //ГЇГ®ГїГўГ«ГҐГ­ГЁГҐ Г ГЄГІГЁГўГ­Г®Г© ГЄГ Г°ГІГЁГ­ГЄГЁ
+        //появление активной картинки
         for (int i = 0; i < N_PICS; i++)
         {
             if (txMouseButtons() == 1 &&
@@ -113,7 +112,7 @@ int main()
             }
         }
 
-
+        //Удаление
         if(GetAsyncKeyState(VK_DELETE))
         {
             n_pics = n_pics - 1;
@@ -131,16 +130,6 @@ int main()
             center[n_active].widthPic = center[n_active].widthPic / 1.05;
             center[n_active].heightPic = center[n_active].heightPic / 1.05;
         }
-        for (int i = 0; i < 3; i = i + 1)
-        {
-            if (txMouseButtons() == 1 &&
-                txMouseX() >= center[i].x &&  txMouseX() <= center[i].x + 200 &&
-                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && category == "Home" )
-            {
-                n_active = i;
-            }
-        }
-
 
         if (GetAsyncKeyState(VK_ESCAPE))
         {
