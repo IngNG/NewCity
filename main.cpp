@@ -18,22 +18,22 @@ int main()
 
     const int N_PICS = 21;
     Picture pic[N_PICS];
-    pic[0] = {1300, 200, 615, 369, txLoadImage ("Äîìà/dom1.bmp"), "Home"};
-    pic[1] = {1300, 300, 564, 300, txLoadImage ("Äîìà/dom2.bmp"), "Home"};
-    pic[2] = {1300, 400, 571, 393, txLoadImage ("Äîìà/dom3.bmp"), "Home"};
-    pic[3] = {1300, 500, 350, 324, txLoadImage ("Äîìà/dom4.bmp"), "Home"};
-    pic[4] = {1300, 600, 407, 264, txLoadImage ("Äîìà/dom5.bmp"), "Home"};
-    pic[5] = {1300, 700, 495, 293, txLoadImage ("Äîìà/dom6.bmp"), "Home"};
-    pic[6] = {1300, 550, 520, 342, txLoadImage ("Äîìà/mnogoetajka1.bmp"), "Mnogoetajka1"};
-    pic[7] = {1300, 250, 900, 195, txLoadImage ("Ïàðêè/park1.bmp"), "Park"};
-    pic[8] = {1300, 400, 512, 355, txLoadImage ("Ïàðêè/park2.bmp"), "Park"};
-    pic[9] = {1300, 550, 650, 400, txLoadImage ("Ïàðêè/park3.bmp"), "Park"};
-    pic[10] = {1300, 250, 512, 429, txLoadImage ("Äåðåâüÿ/tree1.bmp"), "Tree"};
-    pic[11] = {1300, 400, 414, 484, txLoadImage ("Äåðåâüÿ/tree2.bmp"), "Tree"};
-    pic[12] = {1300, 550, 214, 236, txLoadImage ("Äåðåâüÿ/tree3.bmp"), "Tree"};
-    pic[13] = {1300, 250, 408, 581, txLoadImage ("Äåðåâüÿ/tree4.bmp"), "Tree"};
-    pic[14] = {1300, 400, 423, 512, txLoadImage ("Äåðåâüÿ/tree5.bmp"), "Tree"};
-    pic[15] = {1300, 550, 550, 412, txLoadImage ("Äåðåâüÿ/tree6.bmp"), "Tree"};
+    pic[0] = {1300, 200, 615, 369, txLoadImage ("Ã„Ã®Ã¬Ã /dom1.bmp"), "Home"};
+    pic[1] = {1300, 300, 564, 300, txLoadImage ("Ã„Ã®Ã¬Ã /dom2.bmp"), "Home"};
+    pic[2] = {1300, 400, 571, 393, txLoadImage ("Ã„Ã®Ã¬Ã /dom3.bmp"), "Home"};
+    pic[3] = {1300, 500, 350, 324, txLoadImage ("Ã„Ã®Ã¬Ã /dom4.bmp"), "Home"};
+    pic[4] = {1300, 600, 407, 264, txLoadImage ("Ã„Ã®Ã¬Ã /dom5.bmp"), "Home"};
+    pic[5] = {1300, 700, 495, 293, txLoadImage ("Ã„Ã®Ã¬Ã /dom6.bmp"), "Home"};
+    pic[6] = {1300, 550, 520, 342, txLoadImage ("Ã„Ã®Ã¬Ã /mnogoetajka1.bmp"), "Mnogoetajka1"};
+    pic[7] = {1300, 250, 900, 195, txLoadImage ("ÃÃ Ã°ÃªÃ¨/park1.bmp"), "Park"};
+    pic[8] = {1300, 400, 512, 355, txLoadImage ("ÃÃ Ã°ÃªÃ¨/park2.bmp"), "Park"};
+    pic[9] = {1300, 550, 650, 400, txLoadImage ("ÃÃ Ã°ÃªÃ¨/park3.bmp"), "Park"};
+    pic[10] = {1300, 250, 512, 429, txLoadImage ("Ã„Ã¥Ã°Ã¥Ã¢Ã¼Ã¿/tree1.bmp"), "Tree"};
+    pic[11] = {1300, 400, 414, 484, txLoadImage ("Ã„Ã¥Ã°Ã¥Ã¢Ã¼Ã¿/tree2.bmp"), "Tree"};
+    pic[12] = {1300, 550, 214, 236, txLoadImage ("Ã„Ã¥Ã°Ã¥Ã¢Ã¼Ã¿/tree3.bmp"), "Tree"};
+    pic[13] = {1300, 250, 408, 581, txLoadImage ("Ã„Ã¥Ã°Ã¥Ã¢Ã¼Ã¿/tree4.bmp"), "Tree"};
+    pic[14] = {1300, 400, 423, 512, txLoadImage ("Ã„Ã¥Ã°Ã¥Ã¢Ã¼Ã¿/tree5.bmp"), "Tree"};
+    pic[15] = {1300, 550, 550, 412, txLoadImage ("Ã„Ã¥Ã°Ã¥Ã¢Ã¼Ã¿/tree6.bmp"), "Tree"};
     pic[16] = {1300, 200, 300, 196, txLoadImage ("Zdania/Zdania1.bmp"), "Zdania"};
     pic[17] = {1300, 300, 256, 256, txLoadImage ("Zdania/Zdania2.bmp"), "Zdania"};
     pic[18] = {1300, 400, 360, 360, txLoadImage ("Zdania/Zdania3.bmp"), "Zdania"};
@@ -45,12 +45,12 @@ int main()
 
     const int N_Button = 6;
     Button buttons[N_Button];
-    buttons[0] = {10, 10, "Äîìà",TX_CYAN,TX_YELLOW, "Home"};
-    buttons[1] = {210, 10, "Ïàðêè",TX_GREEN,TX_ORANGE, "Park"};
-    buttons[2] = {410, 10, "Çäàíèè",TX_BLUE,TX_MAGENTA, "Zdania"};
-    buttons[3] = {610, 10, "Ïðèðîäà",TX_MAGENTA,TX_BLUE, "Tree"};
-    buttons[4] = {810, 10, "Äîðîãè",TX_ORANGE,TX_GREEN};
-    buttons[5] = {1010, 10, "Ìíîãîýòàæêè",TX_YELLOW,TX_CYAN};
+    buttons[0] = {10, 10, "Ã„Ã®Ã¬Ã ",TX_CYAN,TX_YELLOW, "Home"};
+    buttons[1] = {210, 10, "ÃÃ Ã°ÃªÃ¨",TX_GREEN,TX_ORANGE, "Park"};
+    buttons[2] = {410, 10, "Ã‡Ã¤Ã Ã­Ã¨Ã¨",TX_BLUE,TX_MAGENTA, "Zdania"};
+    buttons[3] = {610, 10, "ÃÃ°Ã¨Ã°Ã®Ã¤Ã ",TX_MAGENTA,TX_BLUE, "Tree"};
+    buttons[4] = {810, 10, "Ã„Ã®Ã°Ã®Ã£Ã¨",TX_ORANGE,TX_GREEN};
+    buttons[5] = {1010, 10, "ÃŒÃ­Ã®Ã£Ã®Ã½Ã²Ã Ã¦ÃªÃ¨",TX_YELLOW,TX_CYAN};
 
 
 
@@ -78,7 +78,10 @@ int main()
                 n_active = i;
             }
         }
+    }
+    drawAllButtons(N_Button, buttons);
 
+  
         if(n_active >=0)
         {
             center[n_active].x = txMouseX() - 60;
@@ -88,26 +91,16 @@ int main()
         if(txMouseButtons() !=1)
             n_active = -100;
 
-        for (int i = 0; i < N_Button; i++)
-            drawButton(buttons[i].x, buttons[i].y, buttons[i].text, buttons[i].colorButton, buttons[i].colorText);
+  
+    category = selectCategory(N_Button, buttons, category);
 
-        for (int i = 0; i < N_Button; i++)
-            if (Click(buttons[i].x, buttons[i].y))
-                category = buttons[i].category;
-
-        for (int i = 0; i < N_PICS; i++)
-            if(category == pic[i].category)
-                Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
-
-        //Ðèñîâàíèå öåíòðàëüíûõ êàðòèíîê
-        for (int i = 0; i < n_pics; i++)
-        {
-            if (center[i].visible)
-            Win32::TransparentBlt (txDC(),center[i].x,center[i].y,center[i].widthPic,center[i].heightPic,center[i].object,0,0,center[i].width,center[i].height, TX_WHITE);
-        }
+    drawRightPictures(N_PICS, pic, category);
 
 
+        //ÃÃ¨Ã±Ã®Ã¢Ã Ã­Ã¨Ã¥ Ã¶Ã¥Ã­Ã²Ã°Ã Ã«Ã¼Ã­Ã»Ãµ ÃªÃ Ã°Ã²Ã¨Ã­Ã®Ãª
+    drawCentralPictures(n_pics, center);
 
+        //Ã¯Ã®Ã¿Ã¢Ã«Ã¥Ã­Ã¨Ã¥ Ã ÃªÃ²Ã¨Ã¢Ã­Ã®Ã© ÃªÃ Ã°Ã²Ã¨Ã­ÃªÃ¨
         for (int i = 0; i < N_PICS; i++)
         {
             if (txMouseButtons() == 1 &&
