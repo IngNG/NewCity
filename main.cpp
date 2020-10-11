@@ -11,7 +11,7 @@ int main()
 
     string category = "Home";
 
-    int n_active = 0;
+    int n_active = -30;
 
     bool Mnogoetajka1 = false;
     bool LKM = false;
@@ -69,20 +69,25 @@ int main()
         txSetFillColour(TX_WHITE);
         txRectangle(0,150,MAX_X,MAX_Y);
 
-    if(LKM)
-    {
         for (int i = 0; i < N_PICS; i++)
         {
             if (txMouseButtons() == 1 &&
-                txMouseX() >= center[i].x && txMouseX() <= center[i].x + 200 &&
-                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100)
+                txMouseX() >= center[n_active].x && txMouseX() <= center[n_active].x + 200 &&
+                txMouseY() >= center[n_active].y && txMouseY() <= center[n_active].y + 100 && n_active < 0)
             {
-                //center[n_active].x = txMouseX() - 30;
-                //center[n_active].y = txMouseY() - 30;
                 n_active = i;
             }
         }
-    }
+
+        if(n_active >=0)
+        {
+            center[n_active].x = txMouseX() - 60;
+            center[n_active].y = txMouseY() - 50;
+        }
+
+        if(txMouseButtons() !=1)
+            n_active = -100;
+
         for (int i = 0; i < N_Button; i++)
             drawButton(buttons[i].x, buttons[i].y, buttons[i].text, buttons[i].colorButton, buttons[i].colorText);
 
@@ -116,28 +121,12 @@ int main()
         }
 
 
-
-
-
-     /*   if(GetAsyncKeyState(VK_LEFT))
+        if(GetAsyncKeyState(VK_DELETE))
         {
-            center[n_active].x = center[n_active].x  - 5;
+            n_pics = n_pics - 1;
         }
 
-        if(GetAsyncKeyState(VK_RIGHT))
-        {
-            center[n_active].x = center[n_active].x  + 5;
-        }
 
-        if(GetAsyncKeyState(VK_UP))
-        {
-            center[n_active].y = center[n_active].y  - 5 ;
-        }
-
-        if(GetAsyncKeyState(VK_DOWN))
-        {
-            center[n_active].y = center[n_active].y  + 5;
-        }*/
 
         if(GetAsyncKeyState(VK_OEM_PLUS))
         {
