@@ -16,7 +16,7 @@ int main()
     bool Mnogoetajka1 = false;
     bool LKM = false;
 
-    const int N_PICS = 21;
+    const int N_PICS = 24;
     Picture pic[N_PICS];
     pic[0] = {1300, 200, 615, 369, txLoadImage ("Дома/dom1.bmp"), "Home"};
     pic[1] = {1300, 300, 564, 300, txLoadImage ("Дома/dom2.bmp"), "Home"};
@@ -39,6 +39,9 @@ int main()
     pic[18] = {1300, 400, 360, 360, txLoadImage ("Zdania/Zdania3.bmp"), "Zdania"};
     pic[19] = {1300, 500, 260, 260, txLoadImage ("Zdania/Zdania4.bmp"), "Zdania"};
     pic[20] = {1300, 600, 360, 360, txLoadImage ("Zdania/Zdania5.bmp"), "Zdania"};
+    pic[21] = {1325, 250, 150, 77, txLoadImage ("Дороги/doroga1.bmp"), "Roads"};
+    pic[22] = {1325, 400, 300, 89, txLoadImage ("Дороги/doroga2.bmp"), "Roads"};
+    pic[23] = {1325, 600, 300, 300, txLoadImage ("Дороги/doroga3.bmp"), "Roads"};
 
     int n_pics = 0;
     Picture center[2000];
@@ -49,7 +52,7 @@ int main()
     buttons[1] = {210, 10, "Парки",TX_GREEN,TX_ORANGE, "Park"};
     buttons[2] = {410, 10, "Здании",TX_BLUE,TX_MAGENTA, "Zdania"};
     buttons[3] = {610, 10, "Природа",TX_MAGENTA,TX_BLUE, "Tree"};
-    buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN};
+    buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN, "Roads"};
     buttons[5] = {1010, 10, "Многоэтажки",TX_YELLOW,TX_CYAN};
 
 
@@ -72,8 +75,8 @@ int main()
         for (int i = 0; i < n_pics; i++)
         {
             if (txMouseButtons() == 1 &&
-                txMouseX() >= center[n_active].x && txMouseX() <= center[n_active].x + 200 &&
-                txMouseY() >= center[n_active].y && txMouseY() <= center[n_active].y + 100 && n_active < 0)
+                txMouseX() >= center[i].x && txMouseX() <= center[i].x + 200 &&
+                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100)
             {
                 n_active = i;
             }
