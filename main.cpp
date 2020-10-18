@@ -11,13 +11,12 @@ int main()
 
     string category = "Home";
 
-    int n_active = -200;
-    int n_active2 = -200;
+    int n_active = -30;
 
     bool Mnogoetajka1 = false;
     bool LKM = false;
 
-    const int N_PICS = 21;
+    const int N_PICS = 24;
     Picture pic[N_PICS];
     pic[0] = {1300, 200, 615, 369, txLoadImage ("Дома/dom1.bmp"), "Home"};
     pic[1] = {1300, 300, 564, 300, txLoadImage ("Дома/dom2.bmp"), "Home"};
@@ -40,6 +39,9 @@ int main()
     pic[18] = {1300, 400, 360, 360, txLoadImage ("Zdania/Zdania3.bmp"), "Zdania"};
     pic[19] = {1300, 500, 260, 260, txLoadImage ("Zdania/Zdania4.bmp"), "Zdania"};
     pic[20] = {1300, 600, 360, 360, txLoadImage ("Zdania/Zdania5.bmp"), "Zdania"};
+    pic[21] = {1325, 250, 150, 77, txLoadImage ("Дороги/doroga1.bmp"), "Roads"};
+    pic[22] = {1325, 400, 300, 89, txLoadImage ("Дороги/doroga2.bmp"), "Roads"};
+    pic[23] = {1325, 600, 300, 300, txLoadImage ("Дороги/doroga3.bmp"), "Roads"};
 
     int n_pics = 0;
     Picture center[2000];
@@ -50,7 +52,7 @@ int main()
     buttons[1] = {210, 10, "Парки",TX_GREEN,TX_ORANGE, "Park"};
     buttons[2] = {410, 10, "Здании",TX_BLUE,TX_MAGENTA, "Zdania"};
     buttons[3] = {610, 10, "Природа",TX_MAGENTA,TX_BLUE, "Tree"};
-    buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN};
+    buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN, "Roads"};
     buttons[5] = {1010, 10, "Многоэтажки",TX_YELLOW,TX_CYAN};
 
 
@@ -70,8 +72,6 @@ int main()
         txSetFillColour(TX_WHITE);
         txRectangle(0,150,MAX_X,MAX_Y);
 
-        drawAllButtons(N_Button, buttons);
-
         for (int i = 0; i < n_pics; i++)
         {
             if (txMouseButtons() == 1 &&
@@ -81,27 +81,10 @@ int main()
             {
                 n_active = i;
             }
-            if (txMouseButtons() == 1 &&
-                center[i].visible &&
-                txMouseX() >= center[i].x && txMouseX() <= center[i].x + 200 &&
-                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && n_active2 < 0)
-            {
-                n_active2 = i;
-            }
         }
 
-        if (n_active2 >=0 && GetAsyncKeyState(VK_DELETE))
-        {
-             n_pics = n_pics - 1;
-             center[n_active2].y = center[n_pics].y;
-             center[n_active2].x = center[n_pics].x;
-             center[n_active2].object = center[n_pics].object;
-             center[n_active2].width = center[n_pics].width;
-             center[n_active2].height = center[n_pics].height;
-             center[n_active2].widthPic = center[n_pics].widthPic;
-             center[n_active2].heightPic = center[n_pics].heightPic;
-             n_active2 = -100;
-        }
+        drawAllButtons(N_Button, buttons);
+
 
         if(n_active >=0)
         {
@@ -133,18 +116,23 @@ int main()
             }
         }
 
+        //Удаление
+        if(GetAsyncKeyState(VK_DELETE))
+        {
+            n_pics = n_pics - 1;
+        }
 
 
 
         if(GetAsyncKeyState(VK_OEM_PLUS))
         {
-            center[n_active2].widthPic = center[n_active2].widthPic * 1.05;
-            center[n_active2].heightPic = center[n_active2].heightPic * 1.05;
+            center[n_active].widthPic = center[n_active].widthPic * 1.05;
+            center[n_active].heightPic = center[n_active].heightPic * 1.05;
         }
         if(GetAsyncKeyState(VK_OEM_MINUS))
         {
-            center[n_active2].widthPic = center[n_active2].widthPic / 1.05;
-            center[n_active2].heightPic = center[n_active2].heightPic / 1.05;
+            center[n_active].widthPic = center[n_active].widthPic / 1.05;
+            center[n_active].heightPic = center[n_active].heightPic / 1.05;
         }
 
         if (GetAsyncKeyState(VK_ESCAPE))
