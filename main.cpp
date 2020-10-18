@@ -75,8 +75,9 @@ int main()
         for (int i = 0; i < n_pics; i++)
         {
             if (txMouseButtons() == 1 &&
+                center[i].visible &&
                 txMouseX() >= center[i].x && txMouseX() <= center[i].x + 200 &&
-                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100)
+                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && n_active < 0)
             {
                 n_active = i;
             }
