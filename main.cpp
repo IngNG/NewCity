@@ -11,7 +11,8 @@ int main()
 
     string category = "Home";
 
-    int n_active = -30;
+    int n_active = -200;
+    int n_active2 = -200;
 
     bool Mnogoetajka1 = false;
     bool LKM = false;
@@ -69,18 +70,38 @@ int main()
         txSetFillColour(TX_WHITE);
         txRectangle(0,150,MAX_X,MAX_Y);
 
+        drawAllButtons(N_Button, buttons);
+
         for (int i = 0; i < n_pics; i++)
         {
             if (txMouseButtons() == 1 &&
-                txMouseX() >= center[n_active].x && txMouseX() <= center[n_active].x + 200 &&
-                txMouseY() >= center[n_active].y && txMouseY() <= center[n_active].y + 100 && n_active < 0)
+                center[i].visible &&
+                txMouseX() >= center[i].x && txMouseX() <= center[i].x + 200 &&
+                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && n_active < 0)
             {
                 n_active = i;
             }
+            if (txMouseButtons() == 1 &&
+                center[i].visible &&
+                txMouseX() >= center[i].x && txMouseX() <= center[i].x + 200 &&
+                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && n_active2 < 0)
+            {
+                n_active2 = i;
+            }
         }
 
-        drawAllButtons(N_Button, buttons);
-
+        if (n_active2 >=0 && GetAsyncKeyState(VK_DELETE))
+        {
+             n_pics = n_pics - 1;
+             center[n_active2].y = center[n_pics].y;
+             center[n_active2].x = center[n_pics].x;
+             center[n_active2].object = center[n_pics].object;
+             center[n_active2].width = center[n_pics].width;
+             center[n_active2].height = center[n_pics].height;
+             center[n_active2].widthPic = center[n_pics].widthPic;
+             center[n_active2].heightPic = center[n_pics].heightPic;
+             n_active2 = -100;
+        }
 
         if(n_active >=0)
         {
@@ -112,23 +133,18 @@ int main()
             }
         }
 
-        //Удаление
-        if(GetAsyncKeyState(VK_DELETE))
-        {
-            n_pics = n_pics - 1;
-        }
 
 
 
         if(GetAsyncKeyState(VK_OEM_PLUS))
         {
-            center[n_active].widthPic = center[n_active].widthPic * 1.05;
-            center[n_active].heightPic = center[n_active].heightPic * 1.05;
+            center[n_active2].widthPic = center[n_active2].widthPic * 1.05;
+            center[n_active2].heightPic = center[n_active2].heightPic * 1.05;
         }
         if(GetAsyncKeyState(VK_OEM_MINUS))
         {
-            center[n_active].widthPic = center[n_active].widthPic / 1.05;
-            center[n_active].heightPic = center[n_active].heightPic / 1.05;
+            center[n_active2].widthPic = center[n_active2].widthPic / 1.05;
+            center[n_active2].heightPic = center[n_active2].heightPic / 1.05;
         }
 
         if (GetAsyncKeyState(VK_ESCAPE))
