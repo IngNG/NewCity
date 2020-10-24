@@ -1,6 +1,34 @@
 #include "TXLib.h"
 #include "struct Picture.cpp"
 #include "Button.cpp"
+#include <fstream>
+#include <iostream>
+#include <cstdlib>
+#include <cstring>
+
+using namespace std;
+
+int getWidth(const char* address)
+{
+    char header[54];
+    ifstream bmp;
+    bmp.open("Дома/dom1.bmp", ios::in | ios::binary);
+    bmp.read(header, 54);
+    int width;
+    memcpy(&width, &header[18], sizeof(width));
+    return width;
+}
+
+int getHeight(const char* address)
+{
+    char header[54];
+    ifstream bmp;
+    bmp.open("Дома/dom1.bmp", ios::in | ios::binary);
+    bmp.read(header, 54);
+    int height;
+    memcpy(&height, &header[22], sizeof(height));
+    return width;
+}
 
 int main()
 {
