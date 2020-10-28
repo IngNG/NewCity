@@ -27,7 +27,7 @@ int getHeight(const char* address)
     bmp.read(header, 54);
     int height;
     memcpy(&height, &header[22], sizeof(height));
-    return width;
+    return height;
 }
 
 int main()
@@ -179,6 +179,28 @@ int main()
                     txSleep(200);
                 }
             }
+
+
+            //Картинки не накладываются
+            for (int i = 0; i < n_pics; i++)
+            {
+                if(n_active != i &&
+                   center[n_active].x + 200 >= center[i].x &&
+                   center[n_active].x       <= center[i].x + 200 &&
+                   center[n_active].y + 100 >= center[i].y &&
+                   center[n_active].y       <= center[i].y + 100)
+                {
+                    center[n_active].x = center[n_active].x + 100;
+                    center[n_active].y = center[n_active].y + 100;
+                    n_active = -1;
+                }
+
+            }
+
+
+
+
+
 
             //Удаление
             if(GetAsyncKeyState(VK_DELETE))
