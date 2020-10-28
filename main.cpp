@@ -1,34 +1,6 @@
 #include "TXLib.h"
 #include "struct Picture.cpp"
 #include "Button.cpp"
-#include <fstream>
-#include <iostream>
-#include <cstdlib>
-#include <cstring>
-
-using namespace std;
-
-int getWidth(const char* address)
-{
-    char header[54];
-    ifstream bmp;
-    bmp.open("Дома/dom1.bmp", ios::in | ios::binary);
-    bmp.read(header, 54);
-    int width;
-    memcpy(&width, &header[18], sizeof(width));
-    return width;
-}
-
-int getHeight(const char* address)
-{
-    char header[54];
-    ifstream bmp;
-    bmp.open("Дома/dom1.bmp", ios::in | ios::binary);
-    bmp.read(header, 54);
-    int height;
-    memcpy(&height, &header[22], sizeof(height));
-    return width;
-}
 
 int main()
 {
@@ -74,7 +46,7 @@ int main()
     int n_pics = 0;
     Picture center[2000];
 
-    const int N_Button = 7;
+    const int N_Button = 6;
     Button buttons[N_Button];
     buttons[0] = {10, 10, "Дома",TX_CYAN,TX_YELLOW, "Home"};
     buttons[1] = {210, 10, "Парки",TX_GREEN,TX_ORANGE, "Park"};
@@ -82,10 +54,8 @@ int main()
     buttons[3] = {610, 10, "Природа",TX_MAGENTA,TX_BLUE, "Tree"};
     buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN, "Roads"};
     buttons[5] = {1010, 10, "Многоэтажки",TX_YELLOW,TX_CYAN};
-    buttons[6] = {1210, 10, "?",TX_WHITE,TX_BLACK};
 
 
-    string PAGE = "Справка";
 
 
     const int MAX_X = 1300;
@@ -95,116 +65,82 @@ int main()
     while (!gameOver)
     {
         txBegin();
+        txSetFillColour(TX_GRAY);
+        txSetColour(TX_BLACK);
+        txRectangle(0,0,1532,150);
+        txRectangle(MAX_X,150,1532,MAX_Y);
+        txSetFillColour(TX_WHITE);
+        txRectangle(0,150,MAX_X,MAX_Y);
 
-        if (PAGE == "Справка")
-        {
-            txSetFillColor(TX_WHITE);
-            txSetColor(TX_BLACK);
-            txClear();
-            txDrawText(1200, 0, 1300, 100, "Другой режим");
-            txDrawText(100, 100, 1200, 500, "Привет \n"
-                  "это конструктор города \n"
-                  "здесь ты сможешь создать свой новый город в котором будет всё как ты хочеш\n"
-                  "для остройки города тебе нужно иметь фотназию и логику толко не путайте логику и упоротую логику"
-                  "управление обьектами осущевляется при помощи мыши\n"
-            );
-
-
-            if (txMouseButtons() == 1 &&
-                txMouseX() >= 1200 &&
-                txMouseX() <= 1300)
-            {
-                PAGE = "Редактор";
-                txSleep(2000);
-            }
-
-        }
-        if (PAGE == "Редактор")
+        for (int i = 0; i < n_pics; i++)
         {
             if (txMouseButtons() == 1 &&
-                txMouseX() >= 1200 &&
-                txMouseX() <= 1300)
+                center[i].visible &&
+                txMouseX() >= center[i].x && txMouseX() <= center[i].x + 200 &&
+                txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && n_active < 0)
             {
-                PAGE = "Справка";
-                txSleep(2000);
+                n_active = i;
             }
-
-            txSetFillColour(TX_GRAY);
-            txSetColour(TX_BLACK);
-            txRectangle(0,0,1532,150);
-            txRectangle(MAX_X,150,1532,MAX_Y);
-            txSetFillColour(TX_WHITE);
-            txRectangle(0,150,MAX_X,MAX_Y);
-
-            for (int i = 0; i < n_pics; i++)
-            {
-                if (txMouseButtons() == 1 &&
-                    center[i].visible &&
-                    txMouseX() >= center[i].x && txMouseX() <= center[i].x + 200 &&
-                    txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && n_active < 0)
-                {
-                    n_active = i;
-                }
-            }
-
-            drawAllButtons(N_Button, buttons);
-
-
-            if(n_active >=0)
-            {
-                center[n_active].x = txMouseX() - 60;
-                center[n_active].y = txMouseY() - 50;
-            }
-
-            if(txMouseButtons() == 0)
-                n_active = -100;
-
-
-            category = selectCategory(N_Button, buttons, category);
-
-            drawRightPictures(N_PICS, pic, category);
-
-            //Рисование центральных картинок
-            drawCentralPictures(n_pics, center);
-
-            //появление активной картинки
-            for (int i = 0; i < N_PICS; i++)
-            {
-                if (txMouseButtons() == 1 &&
-                    txMouseX() >= pic[i].x && txMouseX() <= pic[i].x + 200 &&
-                    txMouseY() >= pic[i].y && txMouseY() <= pic[i].y + 100 && category == pic[i].category )
-                {
-                    center[n_pics] = {random(0,MAX_X - 200), random(150,840 - 100),  pic[i].width,  pic[i].height, pic[i].object, pic[i].category, true, 200, 100};
-                    n_pics++;
-                    txSleep(200);
-                }
-            }
-
-            //Удаление
-            if(GetAsyncKeyState(VK_DELETE))
-            {
-                n_pics = n_pics - 1;
-            }
-
-
-
-            if(GetAsyncKeyState(VK_OEM_PLUS))
-            {
-                center[n_active].widthPic = center[n_active].widthPic * 1.05;
-                center[n_active].heightPic = center[n_active].heightPic * 1.05;
-            }
-            if(GetAsyncKeyState(VK_OEM_MINUS))
-            {
-                center[n_active].widthPic = center[n_active].widthPic / 1.05;
-                center[n_active].heightPic = center[n_active].heightPic / 1.05;
-            }
-
-            if (GetAsyncKeyState(VK_ESCAPE))
-            {
-                gameOver = true;
-            }
-
         }
+
+        drawAllButtons(N_Button, buttons);
+
+
+        if(n_active >=0)
+        {
+            center[n_active].x = txMouseX() - 60;
+            center[n_active].y = txMouseY() - 50;
+        }
+
+        if(txMouseButtons() == 0)
+            n_active = -100;
+
+
+        category = selectCategory(N_Button, buttons, category);
+
+        drawRightPictures(N_PICS, pic, category);
+
+        //Рисование центральных картинок
+        drawCentralPictures(n_pics, center);
+
+        //появление активной картинки
+        for (int i = 0; i < N_PICS; i++)
+        {
+            if (txMouseButtons() == 1 &&
+                txMouseX() >= pic[i].x && txMouseX() <= pic[i].x + 200 &&
+                txMouseY() >= pic[i].y && txMouseY() <= pic[i].y + 100 && category == pic[i].category )
+            {
+                center[n_pics] = {random(0,MAX_X - 200), random(150,840 - 100),  pic[i].width,  pic[i].height, pic[i].object, pic[i].category, true, 200, 100};
+                n_pics++;
+                txSleep(200);
+            }
+        }
+
+        //Удаление
+        if(GetAsyncKeyState(VK_DELETE))
+        {
+            n_pics = n_pics - 1;
+        }
+
+
+
+        if(GetAsyncKeyState(VK_OEM_PLUS))
+        {
+            center[n_active].widthPic = center[n_active].widthPic * 1.05;
+            center[n_active].heightPic = center[n_active].heightPic * 1.05;
+        }
+        if(GetAsyncKeyState(VK_OEM_MINUS))
+        {
+            center[n_active].widthPic = center[n_active].widthPic / 1.05;
+            center[n_active].heightPic = center[n_active].heightPic / 1.05;
+        }
+
+        if (GetAsyncKeyState(VK_ESCAPE))
+        {
+            gameOver = true;
+        }
+
+
         txSleep(20);
         txEnd();
     }
