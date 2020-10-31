@@ -12,7 +12,7 @@ int getWidth(const char* address)
 {
     char header[54];
     ifstream bmp;
-    bmp.open("Дома/dom1.bmp", ios::in | ios::binary);
+    bmp.open(address, ios::in | ios::binary);
     bmp.read(header, 54);
     int width;
     memcpy(&width, &header[18], sizeof(width));
@@ -23,7 +23,7 @@ int getHeight(const char* address)
 {
     char header[54];
     ifstream bmp;
-    bmp.open("Дома/dom1.bmp", ios::in | ios::binary);
+    bmp.open(address, ios::in | ios::binary);
     bmp.read(header, 54);
     int height;
     memcpy(&height, &header[22], sizeof(height));
@@ -46,41 +46,82 @@ int main()
 
     const int N_PICS = 24;
     Picture pic[N_PICS];
-    pic[0] = {1300, 200, 615, 369, txLoadImage ("Дома/dom1.bmp"), "Home"};
-    pic[1] = {1300, 300, 564, 300, txLoadImage ("Дома/dom2.bmp"), "Home"};
-    pic[2] = {1300, 400, 571, 393, txLoadImage ("Дома/dom3.bmp"), "Home"};
-    pic[3] = {1300, 500, 350, 324, txLoadImage ("Дома/dom4.bmp"), "Home"};
-    pic[4] = {1300, 600, 407, 264, txLoadImage ("Дома/dom5.bmp"), "Home"};
-    pic[5] = {1300, 700, 495, 293, txLoadImage ("Дома/dom6.bmp"), "Home"};
-    pic[6] = {1300, 550, 520, 342, txLoadImage ("Дома/mnogoetajka1.bmp"), "Mnogoetajka1"};
-    pic[7] = {1300, 250, 900, 195, txLoadImage ("Парки/park1.bmp"), "Park"};
-    pic[8] = {1300, 400, 512, 355, txLoadImage ("Парки/park2.bmp"), "Park"};
-    pic[9] = {1300, 550, 650, 400, txLoadImage ("Парки/park3.bmp"), "Park"};
-    pic[10] = {1300, 250, 512, 429, txLoadImage ("Деревья/tree1.bmp"), "Tree"};
-    pic[11] = {1300, 400, 414, 484, txLoadImage ("Деревья/tree2.bmp"), "Tree"};
-    pic[12] = {1300, 550, 214, 236, txLoadImage ("Деревья/tree3.bmp"), "Tree"};
-    pic[13] = {1300, 250, 408, 581, txLoadImage ("Деревья/tree4.bmp"), "Tree"};
-    pic[14] = {1300, 400, 423, 512, txLoadImage ("Деревья/tree5.bmp"), "Tree"};
-    pic[15] = {1300, 550, 550, 412, txLoadImage ("Деревья/tree6.bmp"), "Tree"};
-    pic[16] = {1300, 200, 300, 196, txLoadImage ("Zdania/Zdania1.bmp"), "Zdania"};
-    pic[17] = {1300, 300, 256, 256, txLoadImage ("Zdania/Zdania2.bmp"), "Zdania"};
-    pic[18] = {1300, 400, 360, 360, txLoadImage ("Zdania/Zdania3.bmp"), "Zdania"};
-    pic[19] = {1300, 500, 260, 260, txLoadImage ("Zdania/Zdania4.bmp"), "Zdania"};
-    pic[20] = {1300, 600, 360, 360, txLoadImage ("Zdania/Zdania5.bmp"), "Zdania"};
-    pic[21] = {1325, 250, 150, 77, txLoadImage ("Дороги/doroga1.bmp"), "Roads"};
-    pic[22] = {1325, 400, 300, 89, txLoadImage ("Дороги/doroga2.bmp"), "Roads"};
-    pic[23] = {1325, 600, 300, 300, txLoadImage ("Дороги/doroga3.bmp"), "Roads"};
+    pic[0] = {"Дома/dom1.bmp", "Дома"};
+    pic[1] = {"Дома/dom2.bmp", "Дома"};
+    pic[2] = {"Дома/dom3.bmp", "Дома"};
+    pic[3] = {"Дома/dom4.bmp", "Дома"};
+    pic[4] = {"Дома/dom5.bmp", "Дома"};
+    pic[5] = {"Дома/dom6.bmp", "Дома"};
+    pic[6] = {"Дома/mnogoetajka1.bmp", "Mnogoetajka1"};
+    pic[7] = {"Парки/park1.bmp", "Парки"};
+    pic[8] = {"Парки/park2.bmp", "Парки"};
+    pic[9] = {"Парки/park3.bmp", "Парки"};
+    pic[10] = {"Деревья/tree1.bmp", "Деревья"};
+    pic[11] = {"Деревья/tree2.bmp", "Деревья"};
+    pic[12] = {"Деревья/tree3.bmp", "Деревья"};
+    pic[13] = {"Деревья/tree4.bmp", "Деревья"};
+    pic[14] = {"Деревья/tree5.bmp", "Деревья"};
+    pic[15] = {"Деревья/tree6.bmp", "Деревья"};
+    pic[16] = {"Здания/Zdania1.bmp", "Здания"};
+    pic[17] = {"Здания/Zdania2.bmp", "Здания"};
+    pic[18] = {"Здания/Zdania3.bmp", "Здания"};
+    pic[19] = {"Здания/Zdania4.bmp", "Здания"};
+    pic[20] = {"Здания/Zdania5.bmp", "Здания"};
+    pic[21] = {"Дороги/doroga1.bmp", "Дороги"};
+    pic[22] = {"Дороги/doroga2.bmp", "Дороги"};
+    pic[23] = {"Дороги/doroga3.bmp", "Дороги"};
+
+    int ydoma = 150;
+    int ypark = 150;
+    int yderevo = 150;
+    int ysdania = 150;
+    int ydorogi = 150;
+    for(int nomer = 0; nomer < N_PICS; nomer = nomer + 1)
+    {
+        string address = pic[nomer].address;
+
+
+        if(pic[nomer].category == "Дома")
+        {
+            pic[nomer].y = ydoma;
+            ydoma += 100;
+        }
+        if(pic[nomer].category == "Парки")
+        {
+            pic[nomer].y = ypark;
+            ypark += 100;
+        }
+        if(pic[nomer].category == "Деревья")
+        {
+            pic[nomer].y = yderevo;
+            yderevo += 100;
+        }
+        if(pic[nomer].category == "Здания")
+        {
+            pic[nomer].y = ysdania;
+            ysdania += 100;
+        }
+        if(pic[nomer].category == "Дороги")
+        {
+            pic[nomer].y = ydorogi;
+            ydorogi += 100;
+        }
+        pic[nomer].x = 1300;
+        pic[nomer].object = txLoadImage(pic[nomer].address);
+        pic[nomer].height = getHeight(pic[nomer].address);
+        pic[nomer].width = getWidth(pic[nomer].address);
+    }
 
     int n_pics = 0;
     Picture center[2000];
 
     const int N_Button = 7;
     Button buttons[N_Button];
-    buttons[0] = {10, 10, "Дома",TX_CYAN,TX_YELLOW, "Home"};
-    buttons[1] = {210, 10, "Парки",TX_GREEN,TX_ORANGE, "Park"};
-    buttons[2] = {410, 10, "Здании",TX_BLUE,TX_MAGENTA, "Zdania"};
-    buttons[3] = {610, 10, "Природа",TX_MAGENTA,TX_BLUE, "Tree"};
-    buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN, "Roads"};
+    buttons[0] = {10, 10, "Дома",TX_CYAN,TX_YELLOW, "Дома"};
+    buttons[1] = {210, 10, "Парки",TX_GREEN,TX_ORANGE, "Парки"};
+    buttons[2] = {410, 10, "Здания",TX_BLUE,TX_MAGENTA, "Здания"};
+    buttons[3] = {610, 10, "Деревья",TX_MAGENTA,TX_BLUE, "Деревья"};
+    buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN, "Дороги"};
     buttons[5] = {1010, 10, "Многоэтажки",TX_YELLOW,TX_CYAN};
     buttons[6] = {1210, 10, "?",TX_WHITE,TX_BLACK};
 
@@ -174,7 +215,7 @@ int main()
                     txMouseX() >= pic[i].x && txMouseX() <= pic[i].x + 200 &&
                     txMouseY() >= pic[i].y && txMouseY() <= pic[i].y + 100 && category == pic[i].category )
                 {
-                    center[n_pics] = {random(0,MAX_X - 200), random(150,840 - 100),  pic[i].width,  pic[i].height, pic[i].object, pic[i].category, true, 200, 100};
+                    center[n_pics] = {pic[i].address, pic[i].category, random(0,MAX_X - 200), random(150,840 - 100), pic[i].width, pic[i].height, pic[i].object, true, 200, 100};
                     n_pics++;
                     txSleep(200);
                 }
