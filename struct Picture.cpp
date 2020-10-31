@@ -2,12 +2,13 @@
 
 struct Picture
 {
+    const char* address;
+    string category;
     int x;
     int y;
     int width;
     int height;
     HDC object;
-    string category;
     bool visible;
     int widthPic;
     int heightPic;
