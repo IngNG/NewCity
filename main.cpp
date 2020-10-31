@@ -37,6 +37,7 @@ int main()
 
 
 
+
     string category = "Home";
 
     int n_active = -30;
@@ -279,5 +280,17 @@ int main()
     for (int i = 0; i < n_pics; i++)
         txDeleteDC(center[i].object);
 
+    std::ofstream out("dungeonmaster.txt");
+
+    for (int i = 0; i < n_pics; i++)
+    {
+        if (center[i].visible)
+        {
+            out << center[i].x << std::endl;
+            out << center[i].y << std::endl;
+        }
+    }
+
+    out.close();
     return 0;
 }
