@@ -72,6 +72,7 @@ int main()
     pic[22] = {"Дороги/doroga2.bmp", "Дороги"};
     pic[23] = {"Дороги/doroga3.bmp", "Дороги"};
 
+
     int ydoma = 150;
     int ypark = 150;
     int yderevo = 150;
@@ -115,6 +116,27 @@ int main()
 
     int n_pics = 0;
     Picture center[2000];
+
+    ifstream file1("dungeonmaster.txt");
+
+    //while(file1.good())
+    {
+        n_pics = 1;
+        string s;
+        getline(file1, s);
+        center[0].x = atoi(s.c_str());
+        getline(file1, s);
+        center[0].y = atoi(s.c_str());
+        center[0].address = pic[0].address;
+        center[0].heightPic = getHeight(center[0].address);
+        center[0].widthPic = getWidth(center[0].address);
+        center[0].height = getHeight(center[0].address);
+        center[0].width = getWidth(center[0].address);
+        center[0].visible = true;
+        center[0].object = pic[0].object;
+
+    }
+    file1.close();
 
     const int N_Button = 7;
     Button buttons[N_Button];
