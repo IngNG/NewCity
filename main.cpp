@@ -1,5 +1,5 @@
 #include "TXLib.h"
-#include "struct Picture.cpp"
+#include "Picture.cpp"
 #include "Button.cpp"
 #include <fstream>
 #include <iostream>
@@ -41,8 +41,9 @@ int main()
     string category = "Home";
 
     int n_active = -30;
-
+    //Что делает эта переменная?
     bool Mnogoetajka1 = false;
+    //А эта?
     bool LKM = false;
 
     const int N_PICS = 24;
@@ -53,6 +54,7 @@ int main()
     pic[3] = {"Дома/dom4.bmp", "Дома"};
     pic[4] = {"Дома/dom5.bmp", "Дома"};
     pic[5] = {"Дома/dom6.bmp", "Дома"};
+    //А кнопку под это завести?
     pic[6] = {"Дома/mnogoetajka1.bmp", "Mnogoetajka1"};
     pic[7] = {"Парки/park1.bmp", "Парки"};
     pic[8] = {"Парки/park2.bmp", "Парки"};
