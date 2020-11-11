@@ -126,7 +126,9 @@ int main()
     int n_pics = 0;
     Picture center[2000];
 
-    ifstream file1("dungeonmaster.txt");
+
+
+    /*ifstream file1("dungeonmaster.txt");
 
     //while(file1.good())
     {
@@ -145,17 +147,28 @@ int main()
         center[0].object = pic[0].object;
 
     }
-    file1.close();
+    file1.close();*/
 
-    const int N_Button = 7;
+
+
+    const int N_Button = 9;
     Button buttons[N_Button];
-    buttons[0] = {10, 10, "Дома",TX_CYAN,TX_YELLOW, "Дома"};
-    buttons[1] = {210, 10, "Парки",TX_GREEN,TX_ORANGE, "Парки"};
-    buttons[2] = {410, 10, "Здания",TX_BLUE,TX_MAGENTA, "Здания"};
-    buttons[3] = {610, 10, "Деревья",TX_MAGENTA,TX_BLUE, "Деревья"};
-    buttons[4] = {810, 10, "Дороги",TX_ORANGE,TX_GREEN, "Дороги"};
-    buttons[5] = {1010, 10, "Многоэтажки",TX_YELLOW,TX_CYAN, "многоэтажки"};
-    buttons[6] = {1210, 10, "?",TX_WHITE,TX_BLACK};
+    buttons[0] = {"Дома",TX_CYAN,TX_YELLOW, "Дома"};
+    buttons[1] = {"Парки",TX_GREEN,TX_ORANGE, "Парки"};
+    buttons[2] = {"Здания",TX_BLUE,TX_MAGENTA, "Здания"};
+    buttons[3] = {"Деревья",TX_MAGENTA,TX_BLUE, "Деревья"};
+    buttons[4] = {"Дороги",TX_ORANGE,TX_GREEN, "Дороги"};
+    buttons[5] = {"Многоэтажки",TX_YELLOW,TX_CYAN, "многоэтажки"};
+    buttons[6] = {"?",TX_WHITE,TX_BLACK};
+    buttons[7] = {"Сохранение",TX_WHITE,TX_BLACK};
+    buttons[8] = {"Загрузка",TX_WHITE,TX_BLACK};
+    for(int N = 0; N < N_Button; N++)
+    {
+        buttons[N].x = txGetExtentX() * 0.85 * N / N_Button;
+        buttons[N].y = 10;
+        buttons[N].width = txGetExtentX() * 0.85 / N_Button;
+    }
+
 
     string PAGE = "Редактор";
 
@@ -186,7 +199,6 @@ int main()
                   "Создатели: Тимофеев Владислав и Храмцов Артём\n"
                   "Изгнанный: Плешаков Артём!!..\n"
             );
-
 
             if (txMouseButtons() == 1 &&
                 txMouseX() >= 1000 && txMouseY() >= 600 &&
@@ -297,6 +309,50 @@ int main()
             {
                 gameOver = true;
             }
+
+            //Срабатывание кнопки загрузки
+            if (Click(buttons[8].x, buttons[8].y))
+            {
+                ifstream file1("dungeonmaster.txt");
+
+                //while(file1.good())
+                {
+                    n_pics = 1;
+                    string s;
+                    getline(file1, s);
+                    center[0].x = atoi(s.c_str());
+                    getline(file1, s);
+                    center[0].y = atoi(s.c_str());
+                    center[0].address = pic[0].address;
+                    center[0].heightPic = getHeight(center[0].address);
+                    center[0].widthPic = getWidth(center[0].address);
+                    center[0].height = getHeight(center[0].address);
+                    center[0].width = getWidth(center[0].address);
+                    center[0].visible = true;
+                    center[0].object = pic[0].object;
+                }
+
+                file1.close();
+                txMessageBox("Загрузка");
+            }
+
+            //Срабатывание сохранения
+            if(Click(buttons[7].x, buttons[7].y))
+            {
+                std::ofstream out("dungeonmaster.txt");
+
+                for (int i = 0; i < n_pics; i++)
+                {
+                    if (center[i].visible)
+                    {
+                    out << center[i].x << std::endl;
+                    out << center[i].y << std::endl;
+                    }
+                }
+                out.close();
+                txMessageBox("Сохранение");
+            }
+
         }
 
 
@@ -311,17 +367,5 @@ int main()
     for (int i = 0; i < n_pics; i++)
         txDeleteDC(center[i].object);
 
-    std::ofstream out("dungeonmaster.txt");
-
-    for (int i = 0; i < n_pics; i++)
-    {
-        if (center[i].visible)
-        {
-            out << center[i].x << std::endl;
-            out << center[i].y << std::endl;
-        }
-    }
-
-    out.close();
     return 0;
 }
