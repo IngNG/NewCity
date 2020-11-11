@@ -126,31 +126,6 @@ int main()
     int n_pics = 0;
     Picture center[2000];
 
-
-
-    /*ifstream file1("dungeonmaster.txt");
-
-    //while(file1.good())
-    {
-        n_pics = 1;
-        string s;
-        getline(file1, s);
-        center[0].x = atoi(s.c_str());
-        getline(file1, s);
-        center[0].y = atoi(s.c_str());
-        center[0].address = pic[0].address;
-        center[0].heightPic = getHeight(center[0].address);
-        center[0].widthPic = getWidth(center[0].address);
-        center[0].height = getHeight(center[0].address);
-        center[0].width = getWidth(center[0].address);
-        center[0].visible = true;
-        center[0].object = pic[0].object;
-
-    }
-    file1.close();*/
-
-
-
     const int N_Button = 9;
     Button buttons[N_Button];
     buttons[0] = {"Дома",TX_CYAN,TX_YELLOW, "Дома"};
@@ -315,21 +290,35 @@ int main()
             {
                 ifstream file1("dungeonmaster.txt");
 
-                //while(file1.good())
+                n_pics = 0;
+                while(file1.good())
                 {
-                    n_pics = 1;
                     string s;
+                    //x
                     getline(file1, s);
-                    center[0].x = atoi(s.c_str());
-                    getline(file1, s);
-                    center[0].y = atoi(s.c_str());
-                    center[0].address = pic[0].address;
-                    center[0].heightPic = getHeight(center[0].address);
-                    center[0].widthPic = getWidth(center[0].address);
-                    center[0].height = getHeight(center[0].address);
-                    center[0].width = getWidth(center[0].address);
-                    center[0].visible = true;
-                    center[0].object = pic[0].object;
+                    if (s.length()  > 0)
+                    {
+                        center[n_pics].x = atoi(s.c_str());
+                        //y
+                        getline(file1, s);
+                        center[n_pics].y = atoi(s.c_str());
+                        //Ширина
+                        getline(file1, s);
+                        center[n_pics].widthPic = atoi(s.c_str());
+                        // Высота
+                        getline(file1, s);
+                        center[n_pics].heightPic = atoi(s.c_str());
+                        //адрес
+                        getline(file1, s);
+                        center[n_pics].address = s.c_str();
+                        center[n_pics].height = getHeight(center[n_pics].address);
+                        center[n_pics].width = getWidth(center[n_pics].address);
+                        center[n_pics].visible = true;
+                        txMessageBox(center[n_pics].address);
+                        center[n_pics].object = txLoadImage(center[n_pics].address);
+
+                        n_pics = n_pics + 1;
+                    }
                 }
 
                 file1.close();
@@ -345,8 +334,11 @@ int main()
                 {
                     if (center[i].visible)
                     {
-                    out << center[i].x << std::endl;
-                    out << center[i].y << std::endl;
+                        out << center[i].x << std::endl;
+                        out << center[i].y << std::endl;
+                        out << center[i].widthPic << std::endl;
+                        out << center[i].heightPic << std::endl;
+                        out << center[i].address << std::endl;
                     }
                 }
                 out.close();
