@@ -48,34 +48,33 @@ int main()
 
     const int N_PICS = 24;
     Picture pic[N_PICS];
-    pic[0] = {"Дома/dom1.bmp", "Дома"};
-    pic[1] = {"Дома/dom2.bmp", "Дома"};
-    pic[2] = {"Дома/dom3.bmp", "Дома"};
-    pic[3] = {"Дома/dom4.bmp", "Дома"};
-    pic[4] = {"Дома/dom5.bmp", "Дома"};
-    pic[5] = {"Дома/dom6.bmp", "Дома"};
-    //А кнопку под это завести?
-    pic[6] = {"Дома/mnogoetajka1.bmp", "Mnogoetajka1"};
-    pic[7] = {"Парки/park1.bmp", "Парки"};
-    pic[8] = {"Парки/park2.bmp", "Парки"};
-    pic[9] = {"Парки/park3.bmp", "Парки"};
-    pic[10] = {"Деревья/tree1.bmp", "Деревья"};
-    pic[11] = {"Деревья/tree2.bmp", "Деревья"};
-    pic[12] = {"Деревья/tree3.bmp", "Деревья"};
-    pic[13] = {"Деревья/tree4.bmp", "Деревья"};
-    pic[14] = {"Деревья/tree5.bmp", "Деревья"};
-    pic[15] = {"Деревья/tree6.bmp", "Деревья"};
-    pic[16] = {"Здания/Zdania1.bmp", "Здания"};
-    pic[17] = {"Здания/Zdania2.bmp", "Здания"};
-    pic[18] = {"Здания/Zdania3.bmp", "Здания"};
-    pic[19] = {"Здания/Zdania4.bmp", "Здания"};
-    pic[20] = {"Здания/Zdania5.bmp", "Здания"};
-    pic[21] = {"Дороги/doroga1.bmp", "Дороги"};
-    pic[22] = {"Дороги/doroga2.bmp", "Дороги"};
-    pic[23] = {"Дороги/doroga3.bmp", "Дороги"};
-
+    pic[0] = {"Дома/dom1.bmp"};
+    pic[1] = {"Дома/dom2.bmp"};
+    pic[2] = {"Дома/dom3.bmp"};
+    pic[3] = {"Дома/dom4.bmp"};
+    pic[4] = {"Дома/dom5.bmp"};
+    pic[5] = {"Дома/dom6.bmp"};
+    pic[6] = {"многоэтажки/mnogoetajka1.bmp"};
+    pic[7] = {"Парки/park1.bmp"};
+    pic[8] = {"Парки/park2.bmp"};
+    pic[9] = {"Парки/park3.bmp"};
+    pic[10] = {"Деревья/tree1.bmp"};
+    pic[11] = {"Деревья/tree2.bmp"};
+    pic[12] = {"Деревья/tree3.bmp"};
+    pic[13] = {"Деревья/tree4.bmp"};
+    pic[14] = {"Деревья/tree5.bmp"};
+    pic[15] = {"Деревья/tree6.bmp"};
+    pic[16] = {"Здания/Zdania1.bmp"};
+    pic[17] = {"Здания/Zdania2.bmp"};
+    pic[18] = {"Здания/Zdania3.bmp"};
+    pic[19] = {"Здания/Zdania4.bmp"};
+    pic[20] = {"Здания/Zdania5.bmp"};
+    pic[21] = {"Дороги/doroga1.bmp"};
+    pic[22] = {"Дороги/doroga2.bmp"};
+    pic[23] = {"Дороги/doroga3.bmp"};
 
     int ydoma = 150;
+    int yhighbuildings = 150;
     int ypark = 150;
     int yderevo = 150;
     int ysdania = 150;
@@ -84,6 +83,9 @@ int main()
     {
         string address = pic[nomer].address;
 
+        int pos = address.find(" ", 0);
+        int pos2 = address.find("/", pos + 1);
+        pic[nomer].category = address.substr(pos + 1,pos2 - pos - 1);
 
         if(pic[nomer].category == "Дома")
         {
@@ -109,6 +111,11 @@ int main()
         {
             pic[nomer].y = ydorogi;
             ydorogi += 100;
+        }
+         if(pic[nomer].category == "многоэтажки")
+        {
+            pic[nomer].y = yhighbuildings;
+            yhighbuildings += 100;
         }
         pic[nomer].x = 1300;
         pic[nomer].object = txLoadImage(pic[nomer].address);
@@ -151,7 +158,7 @@ int main()
     buttons[2] = {"Здания",TX_BLUE,TX_MAGENTA, "Здания"};
     buttons[3] = {"Деревья",TX_MAGENTA,TX_BLUE, "Деревья"};
     buttons[4] = {"Дороги",TX_ORANGE,TX_GREEN, "Дороги"};
-    buttons[5] = {"Многоэтажки",TX_YELLOW,TX_CYAN};
+    buttons[5] = {"Многоэтажки",TX_YELLOW,TX_CYAN, "многоэтажки"};
     buttons[6] = {"?",TX_WHITE,TX_BLACK};
     buttons[7] = {"Сохранение",TX_WHITE,TX_BLACK};
     buttons[8] = {"Загрузка",TX_WHITE,TX_BLACK};
@@ -180,7 +187,7 @@ int main()
             txSetFillColor(TX_WHITE);
             txSetColor(TX_BLACK);
             txClear();
-            txDrawText(1200, 0, 1300, 100, "Начать!");
+            txDrawText(1000, 600, 1200, 700, "Начать!");
             txDrawText(100, 100, 1200, 500,
                   "Привет \n"
                   "Это конструктор города!!\n"
@@ -193,8 +200,9 @@ int main()
                   "Изгнанный: Плешаков Артём!!..\n"
             );
 
-
-            if (Click(buttons[6].x,buttons[6].y))
+            if (txMouseButtons() == 1 &&
+                txMouseX() >= 1000 && txMouseY() >= 600 &&
+                txMouseX() <= 1200 && txMouseY() <= 700)
             {
                 PAGE = "Редактор";
                 txSleep(500);
@@ -203,7 +211,7 @@ int main()
         }
         if (PAGE == "Редактор")
         {
-            if (Click(buttons[6].x,buttons[6].y))
+            if (Click(buttons[6].x, buttons[6].y))
             {
                 PAGE = "Справка";
                 txSleep(500);
