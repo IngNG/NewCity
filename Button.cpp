@@ -9,6 +9,7 @@ struct Button
     int x;
     int y;
     int width;
+    int height;
 };
 
 void drawButton(int x,int y,int width,const char* text,COLORREF color,COLORREF color1)
