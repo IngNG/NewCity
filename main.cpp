@@ -46,7 +46,7 @@ int main()
     //А эта?
     bool LKM = false;
 
-    const int N_PICS = 24;
+    const int N_PICS = 29;
     Picture pic[N_PICS];
     pic[0] = {"Дома/dom1.bmp"};
     pic[1] = {"Дома/dom2.bmp"};
@@ -55,23 +55,28 @@ int main()
     pic[4] = {"Дома/dom5.bmp"};
     pic[5] = {"Дома/dom6.bmp"};
     pic[6] = {"многоэтажки/mnogoetajka1.bmp"};
-    pic[7] = {"Парки/park1.bmp"};
-    pic[8] = {"Парки/park2.bmp"};
-    pic[9] = {"Парки/park3.bmp"};
-    pic[10] = {"Деревья/tree1.bmp"};
-    pic[11] = {"Деревья/tree2.bmp"};
-    pic[12] = {"Деревья/tree3.bmp"};
-    pic[13] = {"Деревья/tree4.bmp"};
-    pic[14] = {"Деревья/tree5.bmp"};
-    pic[15] = {"Деревья/tree6.bmp"};
-    pic[16] = {"Здания/Zdania1.bmp"};
-    pic[17] = {"Здания/Zdania2.bmp"};
-    pic[18] = {"Здания/Zdania3.bmp"};
-    pic[19] = {"Здания/Zdania4.bmp"};
-    pic[20] = {"Здания/Zdania5.bmp"};
-    pic[21] = {"Дороги/doroga1.bmp"};
-    pic[22] = {"Дороги/doroga2.bmp"};
-    pic[23] = {"Дороги/doroga3.bmp"};
+    pic[7] = {"многоэтажки/mnogoetajka2.bmp"};
+    pic[8] = {"многоэтажки/mnogoetajka3.bmp"};
+    pic[9] = {"многоэтажки/mnogoetajka4.bmp"};
+    pic[10] = {"Парки/park1.bmp"};
+    pic[11] = {"Парки/park2.bmp"};
+    pic[12] = {"Парки/park3.bmp"};
+    pic[13] = {"Деревья/tree1.bmp"};
+    pic[14] = {"Деревья/tree2.bmp"};
+    pic[15] = {"Деревья/tree3.bmp"};
+    pic[16] = {"Деревья/tree4.bmp"};
+    pic[17] = {"Деревья/tree5.bmp"};
+    pic[18] = {"Деревья/tree6.bmp"};
+    pic[19] = {"Здания/Zdania1.bmp"};
+    pic[20] = {"Здания/Zdania2.bmp"};
+    pic[21] = {"Здания/Zdania3.bmp"};
+    pic[22] = {"Здания/Zdania4.bmp"};
+    pic[23] = {"Здания/Zdania5.bmp"};
+    pic[24] = {"Здания/Zdania6.bmp"};
+    pic[25] = {"Здания/Zdania7.bmp"};
+    pic[26] = {"Дороги/doroga1.bmp"};
+    pic[27] = {"Дороги/doroga2.bmp"};
+    pic[28] = {"Дороги/doroga3.bmp"};
 
     int ydoma = 150;
     int yhighbuildings = 150;
