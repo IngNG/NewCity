@@ -5,6 +5,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstring>
+#include <dirent.h>
 
 using namespace std;
 
@@ -30,6 +31,23 @@ int getHeight(const char* address)
     return height;
 }
 
+int file_read(const char* address)
+{
+    DIR *dir;
+    struct dirent *ent;
+    if ((dir = opendir (pic[i].address)) != NULL)
+    {
+        while ((ent = readdir (dir)) != NULL)
+        {
+            string s = ent -> d_name;
+            if(s.find(".bmp") != -1)
+            cout << s << endl;
+        }
+     closedir (dir);
+    }
+
+}
+
 int main()
 {
     txCreateWindow (1532 , 840);
@@ -39,7 +57,7 @@ int main()
 
 
     string category = "Home";
-
+    int i = 0;
     int n_active = -30;
     //Что делает эта переменная?
     bool Mnogoetajka1 = false;
@@ -48,7 +66,9 @@ int main()
 
     const int N_PICS = 29;
     Picture pic[N_PICS];
-    pic[0] = {"Дома/dom1.bmp"};
+    file_read()
+
+  /*  pic[0] = {"Дома/dom1.bmp"};
     pic[1] = {"Дома/dom2.bmp"};
     pic[2] = {"Дома/dom3.bmp"};
     pic[3] = {"Дома/dom4.bmp"};
@@ -77,6 +97,8 @@ int main()
     pic[26] = {"Дороги/doroga1.bmp"};
     pic[27] = {"Дороги/doroga2.bmp"};
     pic[28] = {"Дороги/doroga3.bmp"};
+    */
+
 
     int ydoma = 150;
     int yhighbuildings = 150;
@@ -86,6 +108,7 @@ int main()
     int ydorogi = 150;
     for(int nomer = 0; nomer < N_PICS; nomer = nomer + 1)
     {
+
         string address = pic[nomer].address;
 
         int pos = address.find(" ", 0);
