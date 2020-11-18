@@ -97,7 +97,7 @@ int main()
     pic[26] = {"Дороги/doroga1.bmp"};
     pic[27] = {"Дороги/doroga2.bmp"};
     pic[28] = {"Дороги/doroga3.bmp"};
-    pic[28] = {"Дороги/doroga4.bmp"};
+    pic[
 
 
 
