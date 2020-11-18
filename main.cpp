@@ -275,17 +275,32 @@ int main()
             //Картинки не накладываются
             for (int i = 0; i < n_pics; i++)
             {
-                if(n_active != i &&
-                   center[n_active].x + 200 >= center[i].x &&
-                   center[n_active].x       <= center[i].x + 200 &&
-                   center[n_active].y + 100 >= center[i].y &&
-                   center[n_active].y       <= center[i].y + 100)
+                for(int k = 0; k < n_pics; k++)
                 {
-                    center[n_active].x = center[n_active].x + 100;
-                    center[n_active].y = center[n_active].y + 100;
-                    n_active = -1;
+                    if(k != i &&
+                        center[i].x < center[k].x + center[k].widthPic  &&
+                        center[k].x < center[i].x + center[i].widthPic  &&
+                        center[i].y < center[k].y + center[k].heightPic &&
+                        center[k].y < center[i].y + center[i].heightPic)
+                    {
+                             if (center[i].x < center[k].x)
+                            {
+                                center[k].x = center[i].x + center[i].widthPic;
+                            }
+                            else if (center[i].x > center[k].x)
+                            {
+                                center[i].x = center[k].x + center[k].widthPic;
+                            }
+                            else if (center[i].y < center[k].y)
+                            {
+                                center[k].y = center[i].y + center[i].heightPic;
+                            }
+                            else if (center[i].y > center[k].y)
+                            {
+                                center[i].y = center[k].y + center[k].heightPic;
+                            }
+                    }
                 }
-
             }
 
 
