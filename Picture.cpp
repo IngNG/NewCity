@@ -2,7 +2,7 @@
 
 struct Picture
 {
-    const char* address;
+    string address;
     string category;
     int x;
     int y;
