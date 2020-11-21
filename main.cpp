@@ -31,21 +31,25 @@ int getHeight(const char* address)
     return height;
 }
 
-int file_read(const char* address)
+int file_read(const char* address, Picture* pic, int N)
 {
     DIR *dir;
     struct dirent *ent;
-    /*if ((dir = opendir (pic[i].address)) != NULL)
+    if ((dir = opendir (address)) != NULL)
     {
         while ((ent = readdir (dir)) != NULL)
         {
             string s = ent -> d_name;
+            s = address + s;
             if(s.find(".bmp") != -1)
-            cout << s << endl;
+           {
+                pic[N] = {s};
+                N++;
+           }
         }
      closedir (dir);
-    }   */
-
+    }
+    return N;
 }
 
 int main()
@@ -64,42 +68,14 @@ int main()
     //А эта?
     bool LKM = false;
 
-    const int N_PICS = 29;
-    Picture pic[N_PICS];
-//    file_read()
-
-    pic[0] = {"Дома/dom1.bmp"};
-    pic[1] = {"Дома/dom2.bmp"};
-    pic[2] = {"Дома/dom3.bmp"};
-    pic[3] = {"Дома/dom4.bmp"};
-    pic[4] = {"Дома/dom5.bmp"};
-    pic[5] = {"Дома/dom6.bmp"};
-    pic[6] = {"многоэтажки/mnogoetajka1.bmp"};
-    pic[7] = {"многоэтажки/mnogoetajka2.bmp"};
-    pic[8] = {"многоэтажки/mnogoetajka3.bmp"};
-    pic[9] = {"многоэтажки/mnogoetajka4.bmp"};
-    pic[10] = {"Парки/park1.bmp"};
-    pic[11] = {"Парки/park2.bmp"};
-    pic[12] = {"Парки/park3.bmp"};
-    pic[13] = {"Деревья/tree1.bmp"};
-    pic[14] = {"Деревья/tree2.bmp"};
-    pic[15] = {"Деревья/tree3.bmp"};
-    pic[16] = {"Деревья/tree4.bmp"};
-    pic[17] = {"Деревья/tree5.bmp"};
-    pic[18] = {"Деревья/tree6.bmp"};
-    pic[19] = {"Здания/Zdania1.bmp"};
-    pic[20] = {"Здания/Zdania2.bmp"};
-    pic[21] = {"Здания/Zdania3.bmp"};
-    pic[22] = {"Здания/Zdania4.bmp"};
-    pic[23] = {"Здания/Zdania5.bmp"};
-    pic[24] = {"Здания/Zdania6.bmp"};
-    pic[25] = {"Здания/Zdania7.bmp"};
-    pic[26] = {"Дороги/doroga1.bmp"};
-    pic[27] = {"Дороги/doroga2.bmp"};
-    pic[28] = {"Дороги/doroga3.bmp"};
-    pic[28] = {"Дороги/doroga4.bmp"};
-
-
+    int N_PICS = 0;
+    Picture pic[6060];
+    N_PICS = file_read("Дома/", pic, N_PICS);
+    N_PICS = file_read("многоэтажки/", pic, N_PICS);
+    N_PICS = file_read("Парки/", pic, N_PICS);
+    N_PICS = file_read("Деревья/", pic, N_PICS);
+    N_PICS = file_read("Здания/", pic, N_PICS);
+    N_PICS = file_read("Дороги/", pic, N_PICS);
 
     int ydoma = 150;
     int yhighbuildings = 150;
@@ -147,12 +123,12 @@ int main()
             yhighbuildings += 100;
         }
         pic[nomer].x = 1300;
-        pic[nomer].object = txLoadImage(pic[nomer].address);
-        pic[nomer].height = getHeight(pic[nomer].address);
-        pic[nomer].width = getWidth(pic[nomer].address);
+        pic[nomer].object = txLoadImage(pic[nomer].address.c_str());
+        pic[nomer].height = getHeight(pic[nomer].address.c_str());
+        pic[nomer].width = getWidth(pic[nomer].address.c_str());
     }
 
-    int n_pics = 0;
+    int n_variants = 0;
     Picture center[2000];
 
     const int N_Button = 9;
@@ -228,7 +204,7 @@ int main()
             txSetFillColour(TX_WHITE);
             txRectangle(0,150,MAX_X,MAX_Y);
 
-            for (int i = 0; i < n_pics; i++)
+            for (int i = 0; i < n_variants; i++)
             {
                 if (txMouseButtons() == 1 &&
                     center[i].visible &&
@@ -257,7 +233,7 @@ int main()
             drawRightPictures(N_PICS, pic, category);
 
             //Рисование центральных картинок
-            drawCentralPictures(n_pics, center);
+            drawCentralPictures(n_variants, center);
 
             //появление активной картинки
             for (int i = 0; i < N_PICS; i++)
@@ -266,17 +242,17 @@ int main()
                     txMouseX() >= pic[i].x && txMouseX() <= pic[i].x + 200 &&
                     txMouseY() >= pic[i].y && txMouseY() <= pic[i].y + 100 && category == pic[i].category )
                 {
-                    center[n_pics] = {pic[i].address, pic[i].category, random(0,MAX_X - 200), random(150,840 - 100), pic[i].width, pic[i].height, pic[i].object, true, 200, 100};
-                    n_pics++;
+                    center[n_variants] = {pic[i].address, pic[i].category, random(0,MAX_X - 200), random(150,840 - 100), pic[i].width, pic[i].height, pic[i].object, true, 200, 100};
+                    n_variants++;
                     txSleep(200);
                 }
             }
 
 
             //Картинки не накладываются
-            for (int i = 0; i < n_pics; i++)
+            for (int i = 0; i < n_variants; i++)
             {
-                for(int k = 0; k < n_pics; k++)
+                for(int k = 0; k < n_variants; k++)
                 {
                     if(k != i &&
                         center[i].x < center[k].x + center[k].widthPic  &&
@@ -308,7 +284,7 @@ int main()
             //Удаление
             if(GetAsyncKeyState(VK_DELETE))
             {
-                n_pics = n_pics - 1;
+                n_variants = n_variants - 1;
             }
 
 
@@ -334,7 +310,7 @@ int main()
             {
                 ifstream file1("dungeonmaster.txt");
 
-                n_pics = 0;
+                n_variants = 0;
                 while(file1.good())
                 {
                     string s;
@@ -342,26 +318,26 @@ int main()
                     getline(file1, s);
                     if (s.length()  > 0)
                     {
-                        center[n_pics].x = atoi(s.c_str());
+                        center[n_variants].x = atoi(s.c_str());
                         //y
                         getline(file1, s);
-                        center[n_pics].y = atoi(s.c_str());
+                        center[n_variants].y = atoi(s.c_str());
                         //Ширина
                         getline(file1, s);
-                        center[n_pics].widthPic = atoi(s.c_str());
+                        center[n_variants].widthPic = atoi(s.c_str());
                         // Высота
                         getline(file1, s);
-                        center[n_pics].heightPic = atoi(s.c_str());
+                        center[n_variants].heightPic = atoi(s.c_str());
                         //адрес
                         getline(file1, s);
-                        center[n_pics].address = s.c_str();
-                        center[n_pics].height = getHeight(center[n_pics].address);
-                        center[n_pics].width = getWidth(center[n_pics].address);
-                        center[n_pics].visible = true;
-                        txMessageBox(center[n_pics].address);
-                        center[n_pics].object = txLoadImage(center[n_pics].address);
+                        center[n_variants].address = s.c_str();
+                        center[n_variants].height = getHeight(center[n_variants].address.c_str());
+                        center[n_variants].width = getWidth(center[n_variants].address.c_str());
+                        center[n_variants].visible = true;
+                        txMessageBox(center[n_variants].address.c_str());
+                        center[n_variants].object = txLoadImage(center[n_variants].address.c_str());
 
-                        n_pics = n_pics + 1;
+                        n_variants = n_variants + 1;
                     }
                 }
 
@@ -374,7 +350,7 @@ int main()
             {
                 std::ofstream out("dungeonmaster.txt");
 
-                for (int i = 0; i < n_pics; i++)
+                for (int i = 0; i < n_variants; i++)
                 {
                     if (center[i].visible)
                     {
@@ -400,7 +376,7 @@ int main()
     for (int i = 0; i < N_PICS; i++)
         txDeleteDC(pic[i].object);
 
-    for (int i = 0; i < n_pics; i++)
+    for (int i = 0; i < n_variants; i++)
         txDeleteDC(center[i].object);
 
     return 0;
