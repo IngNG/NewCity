@@ -6,7 +6,7 @@
 #include <cstdlib>
 #include <cstring>
 #include <dirent.h>
-
+#include <string>
 using namespace std;
 
 int getWidth(const char* address)
@@ -308,41 +308,70 @@ int main()
             //Срабатывание кнопки загрузки
             if (Click(buttons[8].x, buttons[8].y))
             {
-                ifstream file1("dungeonmaster.txt");
+                OPENFILENAME ofn;     // общая структура диалогового окна
+                char szFile[260] = {0};      // буфер для имени файла
+                HWND hwnd;              // окно владельца
+                HANDLE hf;              // дескриптор файла
 
-                n_variants = 0;
-                while(file1.good())
+                // Инициализировать OPENFILENAME
+                ZeroMemory(&ofn, sizeof(ofn));
+                ofn.lStructSize = sizeof(ofn);
+                ofn.hwndOwner = txWindow();
+                ofn.lpstrFile = szFile;
+                // Устанавливаем lpstrFile [0] в '\ 0', чтобы GetOpenFileName не
+                // использовать содержимое szFile для инициализации.
+                ofn.lpstrFile[0] = '\0';
+                ofn.nMaxFile = sizeof(szFile);
+                ofn.lpstrFilter = "Text\0*.txt";
+                ofn.nFilterIndex = 1;
+                ofn.lpstrFileTitle = NULL;
+                ofn.nMaxFileTitle = 0;
+                ofn.lpstrInitialDir = NULL;
+                ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+                // Отображение диалогового окна "Открыть".
+
+                if (GetOpenFileName(&ofn)==TRUE)
                 {
-                    string s;
-                    //x
-                    getline(file1, s);
-                    if (s.length()  > 0)
-                    {
-                        center[n_variants].x = atoi(s.c_str());
-                        //y
-                        getline(file1, s);
-                        center[n_variants].y = atoi(s.c_str());
-                        //Ширина
-                        getline(file1, s);
-                        center[n_variants].widthPic = atoi(s.c_str());
-                        // Высота
-                        getline(file1, s);
-                        center[n_variants].heightPic = atoi(s.c_str());
-                        //адрес
-                        getline(file1, s);
-                        center[n_variants].address = s.c_str();
-                        center[n_variants].height = getHeight(center[n_variants].address.c_str());
-                        center[n_variants].width = getWidth(center[n_variants].address.c_str());
-                        center[n_variants].visible = true;
-                        txMessageBox(center[n_variants].address.c_str());
-                        center[n_variants].object = txLoadImage(center[n_variants].address.c_str());
 
-                        n_variants = n_variants + 1;
+                    ifstream file1(ofn.lpstrFile);
+                    n_variants = 0;
+                    while(file1.good())
+                    {
+                        string s;
+                        //x
+                        getline(file1, s);
+                        if (s.length()  > 0)
+                        {
+                            center[n_variants].x = atoi(s.c_str());
+                            //y
+                            getline(file1, s);
+                            center[n_variants].y = atoi(s.c_str());
+                            //Ширина
+                            getline(file1, s);
+                            center[n_variants].widthPic = atoi(s.c_str());
+                            // Высота
+                            getline(file1, s);
+                            center[n_variants].heightPic = atoi(s.c_str());
+                            //адрес
+                            getline(file1, s);
+                            center[n_variants].address = s.c_str();
+                            center[n_variants].height = getHeight(center[n_variants].address.c_str());
+                            center[n_variants].width = getWidth(center[n_variants].address.c_str());
+                            center[n_variants].visible = true;
+                            txMessageBox(center[n_variants].address.c_str());
+                            center[n_variants].object = txLoadImage(center[n_variants].address.c_str());
+
+                            n_variants = n_variants + 1;
+                        }
                     }
+
+                    file1.close();
+                    txMessageBox("Загрузка");
                 }
 
-                file1.close();
-                txMessageBox("Загрузка");
+            /*
+                     */
             }
 
             //Срабатывание сохранения
