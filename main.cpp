@@ -258,7 +258,8 @@ int main()
                         center[i].x < center[k].x + center[k].widthPic  &&
                         center[k].x < center[i].x + center[i].widthPic  &&
                         center[i].y < center[k].y + center[k].heightPic &&
-                        center[k].y < center[i].y + center[i].heightPic)
+                        center[k].y < center[i].y + center[i].heightPic &&
+                        center[k].category != "Дороги")
                     {
                              if (center[i].x < center[k].x)
                             {
