@@ -1,7 +1,6 @@
 #include <string>
 #include <iostream>
 #include <dirent.h>
-#include "TXLib.h"
 using namespace std;
 
 int main()
@@ -14,13 +13,13 @@ int main()
            // »нициализировать OPENFILENAME
             ZeroMemory(&ofn, sizeof(ofn));
             ofn.lStructSize = sizeof(ofn);
-            ofn.hwndOwner = txWindow();
-            //ofn.lpstrFile = szFile;
+            ofn.hwndOwner = NULL;
+            ofn.lpstrFile = szFile;
             // ”станавливаем lpstrFile [0] в '\ 0', чтобы GetOpenFileName не
             // использовать содержимое szFile дл€ инициализации.
             ofn.lpstrFile[0] = '\0';
             ofn.nMaxFile = sizeof(szFile);
-            ofn.lpstrFilter = "Excel files 2003(*.xls)\0*.xls\0Excel files 2007(*.xlsx)\0*.xlsx\0";
+            ofn.lpstrFilter = L"Excel files 2003(*.xls)\0*.xls\0Excel files 2007(*.xlsx)\0*.xlsx\0";
             ofn.nFilterIndex = 1;
             ofn.lpstrFileTitle = NULL;
             ofn.nMaxFileTitle = 0;
