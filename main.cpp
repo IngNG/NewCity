@@ -59,7 +59,7 @@ int main()
 
 
 
-
+    int center_x = 0;
     string category = "Home";
     int i = 0;
     int n_active = -30;
@@ -208,7 +208,7 @@ int main()
             {
                 if (txMouseButtons() == 1 &&
                     center[i].visible &&
-                    txMouseX() >= center[i].x && txMouseX() <= center[i].x + 200 &&
+                    txMouseX() >= center[i].x - center_x && txMouseX() <= center[i].x + center_x + 200 &&
                     txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && n_active < 0)
                 {
                     n_active = i;
@@ -233,7 +233,7 @@ int main()
             drawRightPictures(N_PICS, pic, category);
 
             //Рисование центральных картинок
-            drawCentralPictures(n_variants, center);
+            drawCentralPictures(n_variants, center, center_x);
 
             //появление активной картинки
             for (int i = 0; i < N_PICS; i++)
@@ -287,9 +287,14 @@ int main()
             {
                 n_variants = n_variants - 1;
             }
-
-
-
+            if(GetAsyncKeyState(VK_LEFT))
+            {
+                center_x = center_x + 5;
+            }
+            if(GetAsyncKeyState(VK_RIGHT))
+            {
+                center_x = center_x - 5;
+            }
             if(GetAsyncKeyState(VK_OEM_PLUS))
             {
                 center[n_active].widthPic = center[n_active].widthPic * 1.05;
@@ -338,7 +343,7 @@ int main()
                     ifstream file1(ofn.lpstrFile);
                     n_variants = 0;
                     while(file1.good())
-                    {
+                      {
                         string s;
                         //x
                         getline(file1, s);
