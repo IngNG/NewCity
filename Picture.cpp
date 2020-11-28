@@ -21,11 +21,11 @@ void drawRightPictures(const int N_PICS, Picture* pic, string category)
                 Win32::TransparentBlt (txDC(),pic[i].x,pic[i].y,200,100,pic[i].object,0,0,pic[i].width,pic[i].height, TX_WHITE);
 }
 
-void drawCentralPictures(int n_pics,Picture* center)
+void drawCentralPictures(int n_pics,Picture* center, int center_x)
 {
     for (int i = 0; i < n_pics; i++)
         {
             if (center[i].visible)
-            Win32::TransparentBlt (txDC(),center[i].x,center[i].y,center[i].widthPic,center[i].heightPic,center[i].object,0,0,center[i].width,center[i].height, TX_WHITE);
+            Win32::TransparentBlt (txDC(),center[i].x - center_x,center[i].y,center[i].widthPic,center[i].heightPic,center[i].object,0,0,center[i].width,center[i].height, TX_WHITE);
         }
 }
