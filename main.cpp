@@ -357,6 +357,12 @@ int main()
                             //адрес
                             getline(file1, s);
                             center[n_variants].address = s.c_str();
+
+                            string address = center[n_variants].address;
+                            int pos = address.find(" ", 0);
+                            int pos2 = address.find("/", pos + 1);
+                            center[n_variants].category = address.substr(pos + 1,pos2 - pos - 1);
+
                             center[n_variants].height = getHeight(center[n_variants].address.c_str());
                             center[n_variants].width = getWidth(center[n_variants].address.c_str());
                             center[n_variants].visible = true;
