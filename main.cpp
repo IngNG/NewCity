@@ -87,7 +87,6 @@ int main()
     {
 
         string address = pic[nomer].address;
-
         int pos = address.find(" ", 0);
         int pos2 = address.find("/", pos + 1);
         pic[nomer].category = address.substr(pos + 1,pos2 - pos - 1);
@@ -122,8 +121,19 @@ int main()
             pic[nomer].y = yhighbuildings;
             yhighbuildings += 100;
         }
+
+        bool addressFind = false;
+        for(int i = 0; i < nomer; i++)
+        if(pic[i].address == address)
+        {
+          addressFind = true;
+          pic[nomer].object = pic[i].object;
+        }
+        if(!addressFind)
+            pic[nomer].object = txLoadImage(address.c_str());
+
         pic[nomer].x = 1300;
-        pic[nomer].object = txLoadImage(pic[nomer].address.c_str());
+        //pic[nomer].object = txLoadImage(pic[nomer].address.c_str());
         pic[nomer].height = getHeight(pic[nomer].address.c_str());
         pic[nomer].width = getWidth(pic[nomer].address.c_str());
     }
@@ -200,7 +210,6 @@ int main()
             txSetFillColour(TX_GRAY);
             txSetColour(TX_BLACK);
             txRectangle(0,0,1532,150);
-            txRectangle(MAX_X,150,1532,MAX_Y);
             txSetFillColour(TX_WHITE);
             txRectangle(0,150,MAX_X,MAX_Y);
 
@@ -208,7 +217,8 @@ int main()
             {
                 if (txMouseButtons() == 1 &&
                     center[i].visible &&
-                    txMouseX() >= center[i].x - center_x && txMouseX() <= center[i].x + center_x + 200 &&
+                    txMouseX() >= center[i].x - center_x &&
+                    txMouseX() <= center[i].x - center_x + 200 &&
                     txMouseY() >= center[i].y && txMouseY() <= center[i].y + 100 && n_active < 0)
                 {
                     n_active = i;
@@ -218,22 +228,26 @@ int main()
             drawAllButtons(N_Button, buttons);
 
 
-            if(n_active >=0)
+            if(n_active >= 0)
             {
-                center[n_active].x = txMouseX() - 60;
+                center[n_active].x = txMouseX() - 60 + center_x;
                 center[n_active].y = txMouseY() - 50;
             }
 
             if(txMouseButtons() == 0)
                 n_active = -100;
 
+            //Рисование центральных картинок
+            drawCentralPictures(n_variants, center, center_x);
 
             category = selectCategory(N_Button, buttons, category);
 
+            txSetFillColour(TX_GRAY);
+            txRectangle(MAX_X,150,1532,MAX_Y);
+
             drawRightPictures(N_PICS, pic, category);
 
-            //Рисование центральных картинок
-            drawCentralPictures(n_variants, center, center_x);
+
 
             //появление активной картинки
             for (int i = 0; i < N_PICS; i++)
@@ -281,12 +295,7 @@ int main()
                 }
             }
 
-
-            //Удаление
-            if(GetAsyncKeyState(VK_DELETE))
-            {
-                n_variants = n_variants - 1;
-            }
+            //движение по карте
             if(GetAsyncKeyState(VK_LEFT))
             {
                 center_x = center_x + 5;
@@ -295,6 +304,14 @@ int main()
             {
                 center_x = center_x - 5;
             }
+
+            //Удаление
+            if(GetAsyncKeyState(VK_DELETE))
+            {
+                n_variants = n_variants - 1;
+            }
+
+            //уменьшение и увеличение картинок
             if(GetAsyncKeyState(VK_OEM_PLUS))
             {
                 center[n_active].widthPic = center[n_active].widthPic * 1.05;
@@ -305,7 +322,7 @@ int main()
                 center[n_active].widthPic = center[n_active].widthPic / 1.05;
                 center[n_active].heightPic = center[n_active].heightPic / 1.05;
             }
-
+            //выход по ескейпу
             if (GetAsyncKeyState(VK_ESCAPE))
             {
                 gameOver = true;
@@ -343,7 +360,7 @@ int main()
                     ifstream file1(ofn.lpstrFile);
                     n_variants = 0;
                     while(file1.good())
-                      {
+                    {
                         string s;
                         //x
                         getline(file1, s);
@@ -371,7 +388,6 @@ int main()
                             center[n_variants].height = getHeight(center[n_variants].address.c_str());
                             center[n_variants].width = getWidth(center[n_variants].address.c_str());
                             center[n_variants].visible = true;
-                            txMessageBox(center[n_variants].address.c_str());
                             center[n_variants].object = txLoadImage(center[n_variants].address.c_str());
 
                             n_variants = n_variants + 1;
@@ -379,32 +395,60 @@ int main()
                     }
 
                     file1.close();
-                    txMessageBox("Загрузка");
                 }
 
-            /*
-                     */
+
+
             }
 
             //Срабатывание сохранения
             if(Click(buttons[7].x, buttons[7].y))
             {
-                std::ofstream out("dungeonmaster.txt");
+                OPENFILENAME ofn;     // общая структура диалогового окна
+                char szFile[260] = {0};      // буфер для имени файла
+                HWND hwnd;              // окно владельца
+                HANDLE hf;              // дескриптор файла
 
-                for (int i = 0; i < n_variants; i++)
+                // Инициализировать OPENFILENAME
+                ZeroMemory(&ofn, sizeof(ofn));
+                ofn.lStructSize = sizeof(ofn);
+                ofn.hwndOwner = txWindow();
+                ofn.lpstrFile = szFile;
+                // Устанавливаем lpstrFile [0] в '\ 0', чтобы GetOpenFileName не
+                // использовать содержимое szFile для инициализации.
+                ofn.lpstrFile[0] = '\0';
+                ofn.nMaxFile = sizeof(szFile);
+                ofn.lpstrFilter = "Text\0*.txt";
+                ofn.nFilterIndex = 1;
+                ofn.lpstrFileTitle = NULL;
+                ofn.nMaxFileTitle = 0;
+                ofn.lpstrInitialDir = NULL;
+                ofn.Flags = OFN_PATHMUSTEXIST | OFN_FILEMUSTEXIST;
+
+                // Отображение диалогового окна "Открыть".
+
+                if (GetSaveFileName(&ofn)==TRUE)
                 {
-                    if (center[i].visible)
+                    ofstream out(ofn.lpstrFile);
+
+                    for (int i = 0; i < n_variants; i++)
                     {
-                        out << center[i].x << std::endl;
-                        out << center[i].y << std::endl;
-                        out << center[i].widthPic << std::endl;
-                        out << center[i].heightPic << std::endl;
-                        out << center[i].address << std::endl;
+                        if (center[i].visible)
+                        {
+                            out << center[i].x << std::endl;
+                            out << center[i].y << std::endl;
+                            out << center[i].widthPic << std::endl;
+                            out << center[i].heightPic << std::endl;
+                            out << center[i].address << std::endl;
+                        }
                     }
-                }
-                out.close();
-                txMessageBox("Сохранение");
+                    out.close();
+
             }
+
+
+                }
+
 
         }
 
