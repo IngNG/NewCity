@@ -1,56 +1,11 @@
+/// \file main.cpp
+/// \brief Главный файл
 #include "TXLib.h"
 #include "Picture.cpp"
 #include "Button.cpp"
-#include <fstream>
-#include <iostream>
-#include <cstdlib>
-#include <cstring>
-#include <dirent.h>
-#include <string>
-using namespace std;
 
-int getWidth(const char* address)
-{
-    char header[54];
-    ifstream bmp;
-    bmp.open(address, ios::in | ios::binary);
-    bmp.read(header, 54);
-    int width;
-    memcpy(&width, &header[18], sizeof(width));
-    return width;
-}
 
-int getHeight(const char* address)
-{
-    char header[54];
-    ifstream bmp;
-    bmp.open(address, ios::in | ios::binary);
-    bmp.read(header, 54);
-    int height;
-    memcpy(&height, &header[22], sizeof(height));
-    return height;
-}
 
-int file_read(const char* address, Picture* pic, int N)
-{
-    DIR *dir;
-    struct dirent *ent;
-    if ((dir = opendir (address)) != NULL)
-    {
-        while ((ent = readdir (dir)) != NULL)
-        {
-            string s = ent -> d_name;
-            s = address + s;
-            if(s.find(".bmp") != -1)
-           {
-                pic[N] = {s};
-                N++;
-           }
-        }
-     closedir (dir);
-    }
-    return N;
-}
 
 int main()
 {
@@ -68,75 +23,8 @@ int main()
     //А эта?
     bool LKM = false;
 
-    int N_PICS = 0;
     Picture pic[6060];
-    N_PICS = file_read("Дома/", pic, N_PICS);
-    N_PICS = file_read("многоэтажки/", pic, N_PICS);
-    N_PICS = file_read("Парки/", pic, N_PICS);
-    N_PICS = file_read("Деревья/", pic, N_PICS);
-    N_PICS = file_read("Здания/", pic, N_PICS);
-    N_PICS = file_read("Дороги/", pic, N_PICS);
-
-    int ydoma = 150;
-    int yhighbuildings = 150;
-    int ypark = 150;
-    int yderevo = 150;
-    int ysdania = 150;
-    int ydorogi = 150;
-    for(int nomer = 0; nomer < N_PICS; nomer = nomer + 1)
-    {
-
-        string address = pic[nomer].address;
-        int pos = address.find(" ", 0);
-        int pos2 = address.find("/", pos + 1);
-        pic[nomer].category = address.substr(pos + 1,pos2 - pos - 1);
-
-        if(pic[nomer].category == "Дома")
-        {
-            pic[nomer].y = ydoma;
-            ydoma += 100;
-        }
-        if(pic[nomer].category == "Парки")
-        {
-            pic[nomer].y = ypark;
-            ypark += 100;
-        }
-        if(pic[nomer].category == "Деревья")
-        {
-            pic[nomer].y = yderevo;
-            yderevo += 100;
-        }
-        if(pic[nomer].category == "Здания")
-        {
-            pic[nomer].y = ysdania;
-            ysdania += 100;
-        }
-        if(pic[nomer].category == "Дороги")
-        {
-            pic[nomer].y = ydorogi;
-            ydorogi += 100;
-        }
-         if(pic[nomer].category == "многоэтажки")
-        {
-            pic[nomer].y = yhighbuildings;
-            yhighbuildings += 100;
-        }
-
-        bool addressFind = false;
-        for(int i = 0; i < nomer; i++)
-        if(pic[i].address == address)
-        {
-          addressFind = true;
-          pic[nomer].object = pic[i].object;
-        }
-        if(!addressFind)
-            pic[nomer].object = txLoadImage(address.c_str());
-
-        pic[nomer].x = 1300;
-        //pic[nomer].object = txLoadImage(pic[nomer].address.c_str());
-        pic[nomer].height = getHeight(pic[nomer].address.c_str());
-        pic[nomer].width = getWidth(pic[nomer].address.c_str());
-    }
+    int N_PICS = fillVariants(N_PICS, pic);
 
     int n_variants = 0;
     Picture center[2000];
@@ -152,6 +40,8 @@ int main()
     buttons[6] = {"?",TX_WHITE,TX_BLACK};
     buttons[7] = {"Сохранение",TX_WHITE,TX_BLACK};
     buttons[8] = {"Загрузка",TX_WHITE,TX_BLACK};
+
+    ///Расставление кнопок
     for(int N = 0; N < N_Button; N++)
     {
         buttons[N].x = txGetExtentX() * 0.85 * N / N_Button;
@@ -161,8 +51,6 @@ int main()
 
 
     string PAGE = "Редактор";
-
-
 
     const int MAX_X = 1300;
     const int MAX_Y = 840;
@@ -213,6 +101,7 @@ int main()
             txSetFillColour(TX_WHITE);
             txRectangle(0,150,MAX_X,MAX_Y);
 
+
             for (int i = 0; i < n_variants; i++)
             {
                 if (txMouseButtons() == 1 &&
@@ -249,7 +138,7 @@ int main()
 
 
 
-            //появление активной картинки
+            ///появление активной картинки
             for (int i = 0; i < N_PICS; i++)
             {
                 if (txMouseButtons() == 1 &&
@@ -263,7 +152,7 @@ int main()
             }
 
 
-            //Картинки не накладываются
+            ///Картинки не накладываются
             for (int i = 0; i < n_variants; i++)
             {
                 for(int k = 0; k < n_variants; k++)
@@ -295,7 +184,7 @@ int main()
                 }
             }
 
-            //движение по карте
+            ///Движение по карте
             if(GetAsyncKeyState(VK_LEFT))
             {
                 center_x = center_x + 5;
@@ -305,13 +194,13 @@ int main()
                 center_x = center_x - 5;
             }
 
-            //Удаление
+            ///Удаление
             if(GetAsyncKeyState(VK_DELETE))
             {
                 n_variants = n_variants - 1;
             }
 
-            //уменьшение и увеличение картинок
+            ///Уменьшение и увеличение картинок
             if(GetAsyncKeyState(VK_OEM_PLUS))
             {
                 center[n_active].widthPic = center[n_active].widthPic * 1.05;
@@ -322,13 +211,13 @@ int main()
                 center[n_active].widthPic = center[n_active].widthPic / 1.05;
                 center[n_active].heightPic = center[n_active].heightPic / 1.05;
             }
-            //выход по ескейпу
+            ///Выход по ескейпу
             if (GetAsyncKeyState(VK_ESCAPE))
             {
                 gameOver = true;
             }
 
-            //Срабатывание кнопки загрузки
+            ///Срабатывание кнопки загрузки
             if (Click(buttons[8].x, buttons[8].y))
             {
                 OPENFILENAME ofn;     // общая структура диалогового окна
@@ -401,7 +290,7 @@ int main()
 
             }
 
-            //Срабатывание сохранения
+            ///Срабатывание сохранения
             if(Click(buttons[7].x, buttons[7].y))
             {
                 OPENFILENAME ofn;     // общая структура диалогового окна
