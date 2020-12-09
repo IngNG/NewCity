@@ -2,12 +2,12 @@
 <CodeBlocks_project_file>
 	<FileVersion major="1" minor="6" />
 	<Project>
-		<Option title="мейн1" />
+		<Option title="Город" />
 		<Option pch_mode="2" />
 		<Option compiler="gnu_gcc_compiler__strict__fast_single_files_only" />
 		<Build>
 			<Target title="Debug">
-				<Option output="bin/Debug/мейн1" prefix_auto="1" extension_auto="1" />
+				<Option output="City" prefix_auto="1" extension_auto="1" />
 				<Option object_output="obj/Debug/" />
 				<Option type="0" />
 				<Option compiler="gnu_gcc_compiler__strict__fast_single_files_only" />
@@ -32,6 +32,8 @@
 			<Add option="-Wall" />
 			<Add option="-fexceptions" />
 		</Compiler>
+		<Unit filename="Button.cpp" />
+		<Unit filename="Picture.cpp" />
 		<Unit filename="main.cpp" />
 		<Extensions>
 			<code_completion />
