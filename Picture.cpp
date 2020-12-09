@@ -15,18 +15,28 @@ struct Picture
 {
     ///Адрес файла с картинкой
     string address;
+    ///Категории картинок
     string category;
+    ///Переменная х
     int x;
+    ///Переменная y
     int y;
+    ///Ширина картинок на экране
     int width;
+    ///Высота картинок на экране
     int height;
+    ///Адрес картинки
     HDC object;
+    ///Видимость картинок
     bool visible;
+    ///Ширина картинок в файле
     int widthPic;
+    ///Высота картинок в файле
     int heightPic;
 };
 
 ///Рисование иконок для выбора
+///\param N_PICS Количество картинок, category использование категорий картинок, pic адрес картинки
 void drawRightPictures(const int N_PICS, Picture* pic, string category)
 {
      for (int i = 0; i < N_PICS; i++)
@@ -64,7 +74,7 @@ int getHeight(const char* address)
 
 ///Чтение файлов
 ///\param address Адрес файла
-///\return file_read чтение файла
+///\return Количество картинок
 int file_read(const char* address, Picture* pic, int N)
 {
     DIR *dir;
@@ -86,9 +96,13 @@ int file_read(const char* address, Picture* pic, int N)
     return N;
 }
 
-int fillVariants(int N_PICS, Picture* pic)
+///Заполнять картинки в разные категории и нахожения адреса картинок
+///\param pic Массив картинок
+///\return Количество картинок
+int fillVariants(Picture* pic)
 {
-    N_PICS = file_read("Дома/", pic, 0);
+    //Чтение списка картинок
+    int N_PICS = file_read("Дома/", pic, 0);
     N_PICS = file_read("многоэтажки/", pic, N_PICS);
     N_PICS = file_read("Парки/", pic, N_PICS);
     N_PICS = file_read("Деревья/", pic, N_PICS);
@@ -102,12 +116,9 @@ int fillVariants(int N_PICS, Picture* pic)
     int ysdania = 150;
     int ydorogi = 150;
 
-    ///Упрощение нахождения картинок
-    ///\param nomer новая переменная
-    ///\return создание картинок
+    //Расчет координат, категорий картинок
     for(int nomer = 0; nomer < N_PICS; nomer = nomer + 1)
     {
-
         string address = pic[nomer].address;
         int pos = address.find(" ", 0);
         int pos2 = address.find("/", pos + 1);
@@ -162,12 +173,15 @@ int fillVariants(int N_PICS, Picture* pic)
     return N_PICS;
 }
 
-///Рисование центральных картинок
-void drawCentralPictures(int n_pics,Picture* center, int center_x)
+///\brief Рисование центральных картинок
+///\param center массив центральных картинок,
+///\param center_x Положение камеры / глаз наблюдателя
+///\param n_pics Количество картинок
+void drawCentralPictures(int n_pics, Picture* center, int center_x)
 {
     for (int i = 0; i < n_pics; i++)
-        {
-            if (center[i].visible)
+    {
+        if (center[i].visible)
             Win32::TransparentBlt (txDC(),center[i].x - center_x,center[i].y,center[i].widthPic,center[i].heightPic,center[i].object,0,0,center[i].width,center[i].height, TX_WHITE);
-        }
+    }
 }

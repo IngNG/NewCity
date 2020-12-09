@@ -6,14 +6,23 @@
 ///Структура кнопки
 struct Button
 {
+    ///текст
     const char* text;
+    ///Цветные кнопки
     COLORREF colorButton;
+    ///Цветной текст
     COLORREF colorText;
+    ///Категории картинок
     string category;
+    ///Переменная х
     int x;
+    ///Переменная y
     int y;
+    ///Ширина картинок на экране
     int width;
+    ///Высота картинок на экране
     int height;
+
 };
 
 ///Рисование кнопок
