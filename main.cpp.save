@@ -58,7 +58,7 @@ int main()
     buttons[1] = {"Парки",TX_GREEN,TX_ORANGE, "Парки"};
     buttons[2] = {"Здания",TX_BLUE,TX_MAGENTA, "Здания"};
     buttons[3] = {"Деревья",TX_MAGENTA,TX_BLUE, "Деревья"};
-    buttons[4] = {"Дороги",TX_ORANGE,TX_GREEN, "1"};
+    buttons[4] = {"Дороги",TX_ORANGE,TX_GREEN, "Дороги"};
     buttons[5] = {"Многоэтажки",TX_YELLOW,TX_CYAN, "многоэтажки"};
     buttons[6] = {"?",TX_WHITE,TX_BLACK};
     buttons[7] = {"Сохранение",TX_WHITE,TX_BLACK};
@@ -149,6 +149,9 @@ int main()
             if(txMouseButtons() == 0)
                 n_active = -100;
 
+            //Рисование центральных картинок
+            drawCentralPictures(n_variants, center, center_x);
+
             category = selectCategory(N_Button, buttons, category);
 
 
@@ -200,7 +203,7 @@ int main()
             }
 
             drawDorogi = false;
-            if (category == "1")
+            if (category == "Дороги")
             {
                 drawDorogi = true;
             }
@@ -252,9 +255,6 @@ int main()
                 else if (dorogi[i][j-1])
                     txBitBlt(txDC(), 100 * i - center_x,100 * j, 100, 100, picTupikDown);
             }
-
-            //Рисование центральных картинок
-            drawCentralPictures(n_variants, center, center_x);
 
             ///Движение по карте
             if(GetAsyncKeyState(VK_LEFT))
@@ -330,13 +330,7 @@ int main()
                             for(int i = 0; i < 30; i++)
                             {
                                 for(int j = 0; j < 30; j++)
-                                {
-                                    char ch = file1.get();
-                                    dorogi[j][i] = (ch == '1');
-                                }
-                                file1.get();
-                            }
-                            getline(file1, s);
+                                dorogi[i][j] = atoi(s.c_str
                         }
                         else if (s.length()  > 0)
                         {
@@ -421,7 +415,7 @@ int main()
                     for(int i = 0; i < 30; i++)
                     {
                         for(int j = 0; j < 30; j++)
-                            out << dorogi[j][i];
+                            out << dorogi[i][j];
                         out << endl;
                     }
                     out.close();

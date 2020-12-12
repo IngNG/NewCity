@@ -30,10 +30,10 @@ void drawButton(int x,int y,int width,const char* text,COLORREF color,COLORREF c
 {
     txSetColour(TX_BLACK);
     txSetFillColour(color);
-    txRectangle(x,y,x + width,y + 130);
+    txRectangle(x,y,x + width,y + 100);
     txSetColour(color1);
     txSelectFont("ARIAL", 25);
-    txDrawText(x,y,x + width,y + 130,text);
+    txDrawText(x,y,x + width,y + 100,text);
 }
 
 ///Клик на кнопку
@@ -41,7 +41,7 @@ bool Click(int x,int y)
 {
     if (txMouseButtons() == 1 &&
         txMouseX() >= x &&  txMouseX() <= x + 190 &&
-        txMouseY() >= y &&  txMouseY() <= y + 130)
+        txMouseY() >= y &&  txMouseY() <= y + 100)
     {
         return true;
     }
