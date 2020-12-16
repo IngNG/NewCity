@@ -27,10 +27,11 @@ int main()
     HDC picTupikLeft = txLoadImage("Дороги/dorogaTupikLeft.bmp");
 
     bool dorogi[30][30];
+    bool drawDorogi = true;
 
     for(int i = 0; i < 30; i++)
     for(int j = 0; j < 30; j++)
-    dorogi[i][j] = false;
+        dorogi[i][j] = false;
 
 
 
@@ -39,7 +40,6 @@ int main()
     int i = 0;
     int n_active = -30;
 
-    bool drawDorogi = true;
 
 
     Picture pic[6060];
@@ -417,12 +417,10 @@ int main()
                             out << center[i].address << std::endl;
                         }
                     }
+
                     out.close();
-
-            }
-
-
                 }
+            }
 
 
             //Варианты картинок
