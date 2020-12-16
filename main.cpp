@@ -5,8 +5,6 @@
 #include "Button.cpp"
 
 
-
-
 int main()
 {
     txCreateWindow (1532 , 840);
@@ -43,14 +41,15 @@ int main()
     int n_active = -30;
 
     bool drawDorogi = true;
-    //А эта?
-    bool LKM = false;
+
 
     Picture pic[6060];
-    int N_PICS = fillVariants(N_PICS, pic);
+    int N_PICS = fillVariants(pic);
 
-    int n_variants = 0;
+    //Картинки на карте города
     Picture center[2000];
+    int n_variants = 0;
+
 
     const int N_Button = 9;
     Button buttons[N_Button];
@@ -124,6 +123,25 @@ int main()
             txSetFillColour(TX_WHITE);
             txRectangle(0,150,MAX_X,MAX_Y);
 
+            ///Рисование кнопок движения по экрану
+            txSetFillColor(TX_RED);
+            txRectangle(0, 755, 75, 840);
+            txDrawText(0, 755, 75, 840, "<<<");
+            txRectangle(1225, 755, 1300, 840);
+            txDrawText(1225, 755, 1300, 840, ">>>");
+            if (txMouseButtons() == 1 &&
+                txMouseX() > 0 &&  txMouseX() < 75 &&
+                txMouseY() > 755 &&  txMouseY() < 840)
+            {
+                center_x = center_x - 5;
+            }
+
+            if (txMouseButtons() == 1 &&
+                txMouseX() > 1225 &&  txMouseX() < 1300 &&
+                txMouseY() > 755 &&  txMouseY() < 840)
+            {
+                center_x = center_x + 5;
+            }
 
             for (int i = 0; i < n_variants; i++)
             {
@@ -156,7 +174,7 @@ int main()
 
 
 
-            ///появление активной картинки
+            //появление активной картинки
             for (int i = 0; i < N_PICS; i++)
             {
                 if (txMouseButtons() == 1 &&
@@ -256,15 +274,6 @@ int main()
                     txBitBlt(txDC(), 100 * i - center_x,100 * j, 100, 100, picTupikDown);
             }
 
-            ///Движение по карте
-            if(GetAsyncKeyState(VK_LEFT))
-            {
-                center_x = center_x + 5;
-            }
-            if(GetAsyncKeyState(VK_RIGHT))
-            {
-                center_x = center_x - 5;
-            }
 
             ///Удаление
             if(GetAsyncKeyState(VK_DELETE))
