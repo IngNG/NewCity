@@ -4,7 +4,6 @@
 #include "Picture.cpp"
 #include "Button.cpp"
 
-
 int main()
 {
     txCreateWindow (1532 , 840);
@@ -28,10 +27,11 @@ int main()
     HDC picTupikLeft = txLoadImage("Дороги/dorogaTupikLeft.bmp");
 
     bool dorogi[30][30];
+    bool drawDorogi = true;
 
     for(int i = 0; i < 30; i++)
     for(int j = 0; j < 30; j++)
-    dorogi[i][j] = false;
+        dorogi[i][j] = false;
 
 
 
@@ -40,7 +40,6 @@ int main()
     int i = 0;
     int n_active = -30;
 
-    bool drawDorogi = true;
 
 
     Picture pic[6060];
@@ -274,14 +273,20 @@ int main()
                     txBitBlt(txDC(), 100 * i - center_x,100 * j, 100, 100, picTupikDown);
             }
 
+            //Скриншот
+            if(GetAsyncKeyState(VK_SNAPSHOT))
+            {
+              ScreenCapture(0, 150, MAX_X, 700, "screen.bmp", txWindow());
+              txMessageBox ("Скриншот сохранён.");
+            }
 
-            ///Удаление
+            //Удаление
             if(GetAsyncKeyState(VK_DELETE))
             {
                 n_variants = n_variants - 1;
             }
 
-            ///Уменьшение и увеличение картинок
+            //Уменьшение и увеличение картинок
             if(GetAsyncKeyState(VK_OEM_PLUS))
             {
                 center[n_active].widthPic = center[n_active].widthPic * 1.05;
@@ -292,13 +297,13 @@ int main()
                 center[n_active].widthPic = center[n_active].widthPic / 1.05;
                 center[n_active].heightPic = center[n_active].heightPic / 1.05;
             }
-            ///Выход по ескейпу
+            //Выход по ескейпу
             if (GetAsyncKeyState(VK_ESCAPE))
             {
                 gameOver = true;
             }
 
-            ///Срабатывание кнопки загрузки
+            //Срабатывание кнопки загрузки
             if (Click(buttons[8].x, buttons[8].y))
             {
                 OPENFILENAME ofn;     // общая структура диалогового окна
@@ -371,7 +376,7 @@ int main()
 
             }
 
-            ///Срабатывание сохранения
+            //Срабатывание сохранения
             if(Click(buttons[7].x, buttons[7].y))
             {
                 OPENFILENAME ofn;     // общая структура диалогового окна
@@ -412,12 +417,10 @@ int main()
                             out << center[i].address << std::endl;
                         }
                     }
+
                     out.close();
-
-            }
-
-
                 }
+            }
 
 
             //Варианты картинок
