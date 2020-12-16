@@ -4,9 +4,6 @@
 #include "Picture.cpp"
 #include "Button.cpp"
 
-
-
-
 int main()
 {
     txCreateWindow (1532 , 840);
@@ -30,10 +27,11 @@ int main()
     HDC picTupikLeft = txLoadImage("Дороги/dorogaTupikLeft.bmp");
 
     bool dorogi[30][30];
+    bool drawDorogi = true;
 
     for(int i = 0; i < 30; i++)
     for(int j = 0; j < 30; j++)
-    dorogi[i][j] = false;
+        dorogi[i][j] = false;
 
 
 
@@ -42,15 +40,15 @@ int main()
     int i = 0;
     int n_active = -30;
 
-    bool drawDorogi = true;
-    //А эта?
-    bool LKM = false;
+
 
     Picture pic[6060];
     int N_PICS = fillVariants(pic);
 
-    int n_variants = 0;
+    //Картинки на карте города
     Picture center[2000];
+    int n_variants = 0;
+
 
     const int N_Button = 9;
     Button buttons[N_Button];
@@ -124,6 +122,25 @@ int main()
             txSetFillColour(TX_WHITE);
             txRectangle(0,100,MAX_X,MAX_Y);
 
+            ///Рисование кнопок движения по экрану
+            txSetFillColor(TX_RED);
+            txRectangle(0, 755, 75, 840);
+            txDrawText(0, 755, 75, 840, "<<<");
+            txRectangle(1225, 755, 1300, 840);
+            txDrawText(1225, 755, 1300, 840, ">>>");
+            if (txMouseButtons() == 1 &&
+                txMouseX() > 0 &&  txMouseX() < 75 &&
+                txMouseY() > 755 &&  txMouseY() < 840)
+            {
+                center_x = center_x - 5;
+            }
+
+            if (txMouseButtons() == 1 &&
+                txMouseX() > 1225 &&  txMouseX() < 1300 &&
+                txMouseY() > 755 &&  txMouseY() < 840)
+            {
+                center_x = center_x + 5;
+            }
 
             for (int i = 0; i < n_variants; i++)
             {
@@ -153,7 +170,7 @@ int main()
 
 
 
-            ///появление активной картинки
+            //появление активной картинки
             for (int i = 0; i < N_PICS; i++)
             {
                 if (txMouseButtons() == 1 &&
@@ -179,22 +196,22 @@ int main()
                         center[k].y < center[i].y + center[i].heightPic &&
                         center[k].category != "Дороги")
                     {
-                             if (center[i].x < center[k].x)
-                            {
-                                center[k].x = center[i].x + center[i].widthPic;
-                            }
-                            else if (center[i].x > center[k].x)
-                            {
-                                center[i].x = center[k].x + center[k].widthPic;
-                            }
-                            else if (center[i].y < center[k].y)
-                            {
-                                center[k].y = center[i].y + center[i].heightPic;
-                            }
-                            else if (center[i].y > center[k].y)
-                            {
-                                center[i].y = center[k].y + center[k].heightPic;
-                            }
+                        if (center[i].x < center[k].x)
+                        {
+                            center[k].x = center[i].x + center[i].widthPic;
+                        }
+                        else if (center[i].x > center[k].x)
+                        {
+                            center[i].x = center[k].x + center[k].widthPic;
+                        }
+                        else if (center[i].y < center[k].y)
+                        {
+                            center[k].y = center[i].y + center[i].heightPic;
+                        }
+                        else if (center[i].y > center[k].y)
+                        {
+                            center[i].y = center[k].y + center[k].heightPic;
+                        }
                     }
                 }
             }
@@ -217,7 +234,7 @@ int main()
             for(int j = 0; j < 30; j++)
             if(dorogi[i][j])
             {
-                if(dorogi[i+1][j] && dorogi[i-1][j] && dorogi[i][j-1] && dorogi[i][j+1])
+                if (dorogi[i+1][j] && dorogi[i-1][j] && dorogi[i][j-1] && dorogi[i][j+1])
                     txBitBlt(txDC(), 100 * i - center_x,100 * j, 100, 100, pic4);
 
                 else if(dorogi[i+1][j] && dorogi[i-1][j] && dorogi[i][j-1])
@@ -253,26 +270,20 @@ int main()
                     txBitBlt(txDC(), 100 * i - center_x,100 * j, 100, 100, picTupikDown);
             }
 
-            //Рисование центральных картинок
-            drawCentralPictures(n_variants, center, center_x);
-
-            ///Движение по карте
-            if(GetAsyncKeyState(VK_LEFT))
+            //Скриншот
+            if(GetAsyncKeyState(VK_SNAPSHOT))
             {
-                center_x = center_x + 5;
-            }
-            if(GetAsyncKeyState(VK_RIGHT))
-            {
-                center_x = center_x - 5;
+                ScreenCapture(0, 150, MAX_X, 700, "screen.bmp", txWindow());
+                txMessageBox ("Скриншот сохранён.");
             }
 
-            ///Удаление
+            //Удаление
             if(GetAsyncKeyState(VK_DELETE))
             {
                 n_variants = n_variants - 1;
             }
 
-            ///Уменьшение и увеличение картинок
+            //Уменьшение и увеличение картинок
             if(GetAsyncKeyState(VK_OEM_PLUS))
             {
                 center[n_active].widthPic = center[n_active].widthPic * 1.05;
@@ -283,13 +294,13 @@ int main()
                 center[n_active].widthPic = center[n_active].widthPic / 1.05;
                 center[n_active].heightPic = center[n_active].heightPic / 1.05;
             }
-            ///Выход по ескейпу
+            //Выход по ескейпу
             if (GetAsyncKeyState(VK_ESCAPE))
             {
                 gameOver = true;
             }
 
-            ///Срабатывание кнопки загрузки
+            //Срабатывание кнопки загрузки
             if (Click(buttons[8].x, buttons[8].y))
             {
                 OPENFILENAME ofn;     // общая структура диалогового окна
@@ -375,7 +386,7 @@ int main()
 
             }
 
-            ///Срабатывание сохранения
+            //Срабатывание сохранения
             if(Click(buttons[7].x, buttons[7].y))
             {
                 OPENFILENAME ofn;     // общая структура диалогового окна
@@ -428,6 +439,8 @@ int main()
                 }
             }
 
+            //Рисование центральных картинок
+            drawCentralPictures(n_variants, center, center_x);
 
             //Варианты картинок
             txSetFillColour(TX_GRAY);
