@@ -153,9 +153,6 @@ int main()
             category = selectCategory(N_Button, buttons, category);
 
 
-
-
-
             ///Картинки не накладываются
             for (int i = 0; i < n_variants; i++)
             {
@@ -242,25 +239,7 @@ int main()
                     txBitBlt(txDC(), 100 * i - center_x,100 * j, 100, 100, picTupikDown);
             }
 
-              ///Рисование кнопок движения по экрану
-            txSetFillColor(TX_RED);
-            txRectangle(0, 755, 75, 840);
-            txDrawText(0, 755, 75, 840, "<<<");
-            txRectangle(1225, 755, 1300, 840);
-            txDrawText(1225, 755, 1300, 840, ">>>");
-            if (txMouseButtons() == 1 &&
-                txMouseX() > 0 &&  txMouseX() < 75 &&
-                txMouseY() > 755 &&  txMouseY() < 840)
-            {
-                center_x = center_x - 5;
-            }
 
-            if (txMouseButtons() == 1 &&
-                txMouseX() > 1225 &&  txMouseX() < 1300 &&
-                txMouseY() > 755 &&  txMouseY() < 840)
-            {
-                center_x = center_x + 5;
-            }
 
             //Скриншот
             if(GetAsyncKeyState(VK_SNAPSHOT))
@@ -442,9 +421,28 @@ int main()
             txRectangle(MAX_X,100,1532,MAX_Y);
 
             drawRightPictures(N_PICS, pic, category);
-        }
 
-                //появление активной картинки
+            ///Рисование кнопок движения по экрану
+            txSetFillColor(TX_RED);
+            txRectangle(0, 755, 75, 840);
+            txDrawText(0, 755, 75, 840, "<<<");
+            txRectangle(1225, 755, 1300, 840);
+            txDrawText(1225, 755, 1300, 840, ">>>");
+            if (txMouseButtons() == 1 &&
+                txMouseX() > 0 &&  txMouseX() < 75 &&
+                txMouseY() > 755 &&  txMouseY() < 840)
+            {
+                center_x = center_x - 5;
+            }
+
+            if (txMouseButtons() == 1 &&
+                txMouseX() > 1225 &&  txMouseX() < 1300 &&
+                txMouseY() > 755 &&  txMouseY() < 840)
+            {
+                center_x = center_x + 5;
+            }
+
+              //появление активной картинки
             for (int i = 0; i < N_PICS; i++)
             {
                 if (txMouseButtons() == 1 &&
@@ -456,6 +454,9 @@ int main()
                     txSleep(200);
                 }
             }
+        }
+
+
 
         txSleep(20);
         txEnd();
