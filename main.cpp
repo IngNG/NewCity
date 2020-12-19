@@ -26,6 +26,8 @@ int main()
     HDC picTupikRight = txLoadImage("Дороги/dorogaTupikRight.bmp");
     HDC picTupikLeft = txLoadImage("Дороги/dorogaTupikLeft.bmp");
 
+    HDC fonsprafka = txLoadImage("фон для справки.bmp");
+
     bool dorogi[30][30];
     bool drawDorogi = true;
 
@@ -83,7 +85,7 @@ int main()
 
         if (PAGE == "Справка")
         {
-            txSetFillColor(TX_WHITE);
+            txBitBlt(txDC(), 0, 0, 1532, 840, fonsprafka, 0, 0);
             txSetColor(TX_BLACK);
             txClear();
             txDrawText(1000, 600, 1200, 700, "Начать!");
@@ -122,25 +124,7 @@ int main()
             txSetFillColour(TX_WHITE);
             txRectangle(0,100,MAX_X,MAX_Y);
 
-            ///Рисование кнопок движения по экрану
-            txSetFillColor(TX_RED);
-            txRectangle(0, 755, 75, 840);
-            txDrawText(0, 755, 75, 840, "<<<");
-            txRectangle(1225, 755, 1300, 840);
-            txDrawText(1225, 755, 1300, 840, ">>>");
-            if (txMouseButtons() == 1 &&
-                txMouseX() > 0 &&  txMouseX() < 75 &&
-                txMouseY() > 755 &&  txMouseY() < 840)
-            {
-                center_x = center_x - 5;
-            }
 
-            if (txMouseButtons() == 1 &&
-                txMouseX() > 1225 &&  txMouseX() < 1300 &&
-                txMouseY() > 755 &&  txMouseY() < 840)
-            {
-                center_x = center_x + 5;
-            }
 
             for (int i = 0; i < n_variants; i++)
             {
@@ -170,18 +154,6 @@ int main()
 
 
 
-            //появление активной картинки
-            for (int i = 0; i < N_PICS; i++)
-            {
-                if (txMouseButtons() == 1 &&
-                    txMouseX() >= pic[i].x && txMouseX() <= pic[i].x + 200 &&
-                    txMouseY() >= pic[i].y && txMouseY() <= pic[i].y + 100 && category == pic[i].category )
-                {
-                    center[n_variants] = {pic[i].address, pic[i].category, random(0,MAX_X - 200), random(150,840 - 100), pic[i].width, pic[i].height, pic[i].object, true, 200, 100};
-                    n_variants++;
-                    txSleep(200);
-                }
-            }
 
 
             ///Картинки не накладываются
@@ -268,6 +240,26 @@ int main()
                     txBitBlt(txDC(), 100 * i - center_x,100 * j, 100, 100, picTupikUp);
                 else if (dorogi[i][j-1])
                     txBitBlt(txDC(), 100 * i - center_x,100 * j, 100, 100, picTupikDown);
+            }
+
+              ///Рисование кнопок движения по экрану
+            txSetFillColor(TX_RED);
+            txRectangle(0, 755, 75, 840);
+            txDrawText(0, 755, 75, 840, "<<<");
+            txRectangle(1225, 755, 1300, 840);
+            txDrawText(1225, 755, 1300, 840, ">>>");
+            if (txMouseButtons() == 1 &&
+                txMouseX() > 0 &&  txMouseX() < 75 &&
+                txMouseY() > 755 &&  txMouseY() < 840)
+            {
+                center_x = center_x - 5;
+            }
+
+            if (txMouseButtons() == 1 &&
+                txMouseX() > 1225 &&  txMouseX() < 1300 &&
+                txMouseY() > 755 &&  txMouseY() < 840)
+            {
+                center_x = center_x + 5;
             }
 
             //Скриншот
@@ -442,6 +434,9 @@ int main()
             //Рисование центральных картинок
             drawCentralPictures(n_variants, center, center_x);
 
+
+
+
             //Варианты картинок
             txSetFillColour(TX_GRAY);
             txRectangle(MAX_X,100,1532,MAX_Y);
@@ -449,6 +444,18 @@ int main()
             drawRightPictures(N_PICS, pic, category);
         }
 
+                //появление активной картинки
+            for (int i = 0; i < N_PICS; i++)
+            {
+                if (txMouseButtons() == 1 &&
+                    txMouseX() >= pic[i].x && txMouseX() <= pic[i].x + 200 &&
+                    txMouseY() >= pic[i].y && txMouseY() <= pic[i].y + 100 && category == pic[i].category )
+                {
+                    center[n_variants] = {pic[i].address, pic[i].category, center_x + random(0,MAX_X - 200), random(150,840 - 100), pic[i].width, pic[i].height, pic[i].object, true, 200, 100};
+                    n_variants++;
+                    txSleep(200);
+                }
+            }
 
         txSleep(20);
         txEnd();
